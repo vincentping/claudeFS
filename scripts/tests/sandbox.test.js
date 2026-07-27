@@ -1,11 +1,11 @@
 // scripts/tests/sandbox.test.js
 // node scripts/tests/sandbox.test.js
-// 覆盖 docs/archives/20260715_review_2.md / _reply.md 涉及的 splitPath 边界：
+// 覆盖 splitPath 边界：
 //   - "\uF0XX" 转义序列在解析前还原成真实 WSL 私有使用区字符（问题一、二统一根因的修复）
 //   - Windows 风格路径（用 "\" 当分隔符）与 POSIX 风格路径（用 "/" 当分隔符）都继续工作
 //   - 反斜杠出现在文件名字面各种位置（开头/中间/结尾/连续多个）时，只要不是我们的转义
-//     序列格式，splitPath 现有的 "\\ → /" 分隔符归一化行为不变（未采纳 review 提的
-//     "\ 只当字面量" 方案——查证后发现反斜杠丢失的根因不是这个歧义，见 reply 文档）
+//     序列格式，splitPath 现有的 "\\ → /" 分隔符归一化行为不变（未采纳"\ 只当字面量"方案——
+//     查证后发现反斜杠丢失的根因不是这个歧义）
 const assert = require('assert');
 const { loadContext } = require('./helpers/load-context');
 const { makeRootHandle } = require('./helpers/fake-fs');

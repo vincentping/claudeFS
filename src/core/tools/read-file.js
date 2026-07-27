@@ -5,7 +5,7 @@
 //   read_file 官方标为 deprecated，指向 read_text_file，二者共用实现。
 // （schema 已核对官方 v2026.7.4 源码确认，不是凭记忆猜的。）
 //
-// 与官方的刻意差异（docs/archives/20260714_review_1.md #4/#6，均已确认属于本产品的真实缺口，不是遗漏）：
+// 与官方的刻意差异（均已确认属于本产品的真实缺口，不是遗漏）：
 //   - head/tail 用流式/分块读取，只读需要的那部分，不整读文件、不受大小上限限制；
 //     "整读"（既不给 head 也不给 tail）才套 MAX_BYTES 上限。
 //   - 读之前用共享的 core/fs/binary-detect.js 做二进制嗅探，拒绝明显的二进制文件并给清晰
@@ -126,9 +126,8 @@
       inputSchema,
       outputSchema,
       annotations: { title: 'Read File (Deprecated)', readOnlyHint: true, destructiveHint: false },
-      // 2026-07-16（review_3 ⑦）：不再对 Claude 暴露（dispatch.listTools 会过滤掉带
-      // unlisted 的工具），省一条 description 的 token；代码/契约/callTool 均保留，
-      // 官方对齐 14 个的台账不变（CLAUDE.md §4）。见 docs/archives/20260716_review_3.md。
+      // 不再对 Claude 暴露（dispatch.listTools 会过滤掉带 unlisted 的工具），省一条
+      // description 的 token；代码/契约/callTool 均保留，官方对齐 14 个的台账不变。
       unlisted: true
     },
     handler: readHandler

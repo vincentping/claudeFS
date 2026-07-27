@@ -1,7 +1,7 @@
 // core/fs/limits.js — 宿主无关。
 // 需要整读文件进内存的工具共用的大小上限。官方 server-filesystem 没有这个限制（Node fs
-// 直接读），但 DESIGN.md §3.1 要求我们加——浏览器里把一个巨大文件整个读进 JS 字符串风险
-// 更高。5MB 是可调的起始值，此前在 edit-file.js / move-file.js / insert-lines.js /
+// 直接读），但浏览器里把一个巨大文件整个读进 JS 字符串风险更高，故加此限制。5MB 是可调
+// 的起始值，此前在 edit-file.js / move-file.js / insert-lines.js /
 // read-multiple-files.js / grep-files.js / read-file.js / read-file-lines.js /
 // get-file-info.js 里各自硬编码同一个数字，现合并到这一处共享常量。
 //

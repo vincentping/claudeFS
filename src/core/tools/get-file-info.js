@@ -8,17 +8,16 @@
 // 与官方的刻意差异（浏览器 API 的真实限制，不是遗漏）：File System Access API 不提供
 // created 时间、访问时间、权限位，也不提供目录的大小/修改时间——这些字段官方直接读
 // Node fs.stat 就有，浏览器里没有对应能力。为了保持返回的字段名和官方一致（Claude 已经
-// 熟悉这套 key，契约对齐见 D8），拿不到的字段值统一写成"不可用（浏览器 API 不提供）"而
+// 熟悉这套 key），拿不到的字段值统一写成"不可用（浏览器 API 不提供）"而
 // 不是让整个字段消失，方便 Claude 一眼看出"这是产品限制、不是这个文件本身没有这个数据"。
 //
-// totalLines 字段（工具增强批次 v2 ⑤，2026-07-16）：对官方 7 个 key 的**增列**
-// （additive）——不改动官方任何既有字段的名称/语义，输出形状（text 逐行 key: value）不变，
-// 判定为不构成"魔改"（design-notes D12）。动机：read_file_lines / replace_lines /
-// insert_lines 都按行号工作，想知道文件总行数之前得先整读一遍；这里流式读取计数
-// （stream() + 逐 chunk 数 "\n"），不整读进内存，保持元信息工具应有的低成本。二进制文件
-// 和目录都不统计行数（值为说明文字，风格与 NOT_AVAILABLE 一致）；>5MB 的文件也跳过统计
-// （元信息工具应保持廉价，行数不是它的核心职责，需要精确行数可以用 read_file_lines 之类
-// 会整读的工具）。
+// totalLines 字段：对官方 7 个 key 的**增列**（additive）——不改动官方任何既有字段的
+// 名称/语义，输出形状（text 逐行 key: value）不变，不构成"魔改"。动机：read_file_lines /
+// replace_lines / insert_lines 都按行号工作，想知道文件总行数之前得先整读一遍；这里流式
+// 读取计数（stream() + 逐 chunk 数 "\n"），不整读进内存，保持元信息工具应有的低成本。
+// 二进制文件和目录都不统计行数（值为说明文字，风格与 NOT_AVAILABLE 一致）；>5MB 的文件
+// 也跳过统计（元信息工具应保持廉价，行数不是它的核心职责，需要精确行数可以用
+// read_file_lines 之类会整读的工具）。
 (function () {
   const NAME = 'get_file_info';
   const NOT_AVAILABLE = '不可用（浏览器 File System Access API 不提供此信息）';

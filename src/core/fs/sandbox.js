@@ -1,11 +1,11 @@
 // core/fs/sandbox.js — 宿主无关。
 // 把工具收到的 `path` 参数（相对已授权根目录）解析成对应的 FileSystemDirectoryHandle
-// 或 FileSystemFileHandle。对应 DESIGN.md §3.2 的安全模型。
+// 或 FileSystemFileHandle。
 //
 // 真正的沙箱边界由浏览器内核保证，不是靠这里的字符串校验：getDirectoryHandle(name) 只会
 // 把 name 当字面量子目录名去查自己的直接子项，不认识 ".."/"." 这些特殊含义，就算完全不
 // 做任何校验，传 ".." 也只会因为"没有一个真的叫 .. 的子目录"报 NotFoundError，不可能真的
-// 跳出授权目录（详见 docs/archives/20260714_review_1_reply.md #5）。这里的绝对路径/盘符拒绝纯粹是为了在
+// 跳出授权目录。这里的绝对路径/盘符拒绝纯粹是为了在
 // 更早的地方给出更清晰的错误信息，属于报错质量而不是安全修复。
 (function () {
   function splitPath(path) {
@@ -19,7 +19,7 @@
     }
 
     // 先把 "\uF0XX" 转义序列还原成真实的 WSL 私有使用区字符（见 core/fs/name-escape.js
-    // 顶部注释、docs/archives/20260715_review_2_reply.md）——必须在下面的 "\\ → /" 分隔符归一化
+    // 顶部注释）——必须在下面的 "\\ → /" 分隔符归一化
     // 之前做：转义序列本身含字面 ASCII 反斜杠（"`\uF05C`" 这 8 个字符），如果先做分隔符
     // 归一化会把这个字面反斜杠也错当分隔符切开。还原之后，这条路径里如果本来就有真实的
     // 私有区字符（如真的 U+F05C），就不再是 ASCII "\\"，不会被下面的 replace 误伤。
@@ -116,7 +116,7 @@
 
   // rm_empty_dir 用：删除一个目录条目本身（调用方已确认该目录为空）。和 removeFile 结构
   // 一样，只是最后一段落在目录名上；`removeEntry` 不带 `{recursive:true}`——非空目录会
-  // 报错而不是被递归删掉，这正是 rm_empty_dir "绝不递归删" 的兜底保障（见 design-notes D13）。
+  // 报错而不是被递归删掉，这正是 rm_empty_dir "绝不递归删" 的兜底保障。
   async function removeDirectory(rootHandle, path) {
     const segments = splitPath(path);
     if (segments.length === 0) {

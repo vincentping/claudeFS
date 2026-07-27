@@ -1,8 +1,8 @@
 // core/tools/grep-files.js — 宿主无关。
-// 扩展工具（官方无对应；D12 立项理由：官方 search_files 只搜文件名，浏览器场景 Claude
+// 扩展工具（官方无对应；立项理由：官方 search_files 只搜文件名，浏览器场景 Claude
 // 没有真 grep，按内容搜索是真实痛点）。契约完全自定义，没有官方参照，边界行为定死在
-// 这里和下面的 description 里（D12 原则 2：Claude 对扩展工具没有训练熟悉度，description
-// 必须自我解释完整）。
+// 这里和下面的 description 里（Claude 对扩展工具没有训练熟悉度，description 必须
+// 自我解释完整）。
 //
 // 边界行为（今天定死的规格）：
 //   - pattern 默认字面量子串匹配；regex:true 才把 pattern 当正则解释，无效正则报错。
@@ -14,12 +14,12 @@
 //     默认忽略 node_modules、.git。
 //   - 行号从 1 开始，按 '\n' 计数（不用 /\r?\n/），与 read_file_lines、edit_file 报错里的
 //     行号同一基准——三者可以配合使用，见 scripts/tests 里的跨工具一致性用例。
-//   - glob 分流规则（2026-07-15，docs/archives/20260715_review_1.md P1a 修正）：pattern 不含 "/"
+//   - glob 分流规则：pattern 不含 "/"
 //     按 basename 任意深度匹配（"*.md" 搜全项目所有 .md，不是只搜根目录）；含 "/" 按完整
 //     相对路径锚定匹配（"src/*.js" 只命中 src 这一层，"**/*.md" 显式任意深度）。分流只看
-//     是否含 "/"，不按通配符种类（*/**/?）分叉。这是 grep_files 自己的契约（D12 扩展工具，
+//     是否含 "/"，不按通配符种类（*/**/?）分叉。这是 grep_files 自己的契约（扩展工具，
 //     不必跟随 search_files 的路径锚定语义）。
-//   - path 可以指向单个文件（P1b 修正）：此时只搜这一个文件，glob 不生效（和 ripgrep 一致，
+//   - path 可以指向单个文件：此时只搜这一个文件，glob 不生效（和 ripgrep 一致，
 //     显式点名的文件不受 --glob 过滤）；path 指向目录时才递归遍历、glob 才生效。
 (function () {
   const NAME = 'grep_files';
@@ -157,8 +157,8 @@
         const m = matchLine(line);
         if (!m) continue;
         hasMatch = true;
-        // relPath 展示前转义 WSL 私有使用区字符（见 list-directory.js 顶部注释 /
-        // docs/archives/20260715_review_2_reply.md）；匹配/遍历全程用的是原始 relPath，只在这里
+        // relPath 展示前转义 WSL 私有使用区字符（见 list-directory.js 顶部注释）；
+        // 匹配/遍历全程用的是原始 relPath，只在这里
         // 写入结果文本时转义。
         const displayPath = self.ClaudefsCore.fs.nameEscape.escapeSpecialChars(relPath);
         results.push(`${displayPath}:${i + 1}: ${truncateLine(line, m.index, m.length)}`);

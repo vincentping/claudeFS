@@ -1,6 +1,6 @@
 // scripts/tests/output-schema.test.js
 // node scripts/tests/output-schema.test.js
-// 覆盖性断言（review_5 §验证 4）：20 个工具文件手工逐个补 outputSchema，漏一个不会
+// 覆盖性断言：20 个工具文件手工逐个补 outputSchema，漏一个不会
 // 有任何报错、也不会有任何其它测试变红——这里遍历全部注册逐个核对，兜住这个空档。
 const assert = require('assert');
 const { loadContext } = require('./helpers/load-context');

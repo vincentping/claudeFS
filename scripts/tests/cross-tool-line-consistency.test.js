@@ -76,7 +76,7 @@ async function main() {
           threw = true;
           assert.ok(err.message.includes('3') && err.message.includes('5'), err.message);
         }
-        assert.ok(threw, 'oldText 命中两处应该报错（edit_file 的既有安全规则，见 design-notes D5）');
+        assert.ok(threw, 'oldText 命中两处应该报错（edit_file 的既有安全规则）');
       }
     ],
     [

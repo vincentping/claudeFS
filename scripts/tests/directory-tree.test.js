@@ -1,6 +1,6 @@
 // scripts/tests/directory-tree.test.js
 // node scripts/tests/directory-tree.test.js
-// 覆盖 docs/archives/20260715_review_2_reply.md 的转义修复：directory_tree 的 name 字段展示前
+// 覆盖转义修复：directory_tree 的 name 字段展示前
 // 转义 WSL 私有区字符，但 glob 排除匹配和递归遍历必须用原始未转义的 name，否则子目录的
 // excludePatterns 会拿转义后的假路径去匹配、永远匹配不上。
 const assert = require('assert');

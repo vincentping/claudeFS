@@ -1,11 +1,10 @@
 // adapters/claude/content-isolated.js — claude.ai 适配层，ISOLATED world。
-// 职责（DESIGN.md §2.3）：
+// 职责：
 //   1. 目录选择 UI 的宿主：在页面内注入连接面板，用真实用户点击调用
 //      showDirectoryPicker()，再经 core/bridge.isolated.js 的私有通道交给 MAIN world 使用。
-//   2. handle 的 IndexedDB 持久化 + 页面（重）加载时的权限恢复
-//      （DESIGN.md §4 验证清单第 4 项）。
-//   3. 断开连接 / 换目录这类连接生命周期管理（工具栏 popup 状态面板留到"打磨"阶段做，
-//      见 CLAUDE.md §6 第 5 步；这里先只做面板本身能完整覆盖的操作）。
+//   2. handle 的 IndexedDB 持久化 + 页面（重）加载时的权限恢复。
+//   3. 断开连接 / 换目录这类连接生命周期管理（工具栏 popup 状态面板留到后续打磨阶段做；
+//      这里先只做面板本身能完整覆盖的操作）。
 (function () {
   const TAG = '[claudefs:isolated]';
   const log = (...args) => console.log(TAG, ...args);
@@ -67,11 +66,12 @@
   }
 
   // claude.ai MCP 握手状态（来自 MAIN world，经 core/bridge.isolated.js 私有通道；
-  // 不是 bridge 自身建立那个握手，见 docs/archives/20260714_review_3.md）。默认 'pending'——bridge
+  // 不是 bridge 自身建立那个握手）。默认 'pending'——bridge
   // 建立完成前收不到任何消息，'pending' 天然是安全的初始值：不暴露任何连接按钮。
   // 只有握手 'success' 才展示原有的连接状态机（disconnected/connected/needs-reauth）；
   // 'pending'/'failed' 时无论 IndexedDB 里恢复出什么 handle，都不渲染按钮——避免在
-  // 非对话页/未就绪页面上出现"连了也是空转"的按钮（不依赖 URL 或登录态判断，见铁律）。
+  // 非对话页/未就绪页面上出现"连了也是空转"的按钮（判断依据是握手状态本身，不依赖
+  // URL 或登录态）。
   let mcpHandshakeStatus = 'pending';
   let latestConnectionState = { status: 'checking' };
 
@@ -123,7 +123,7 @@
   }
 
   // 经 core/bridge.isolated.js 的私有 MessageChannel 转发，不再用 window.postMessage
-  // 广播——页面里其他脚本无法伪造或窃听这条消息（见 docs/archives/20260714_review_1_reply.md P0-1）。
+  // 广播——页面里其他脚本无法伪造或窃听这条消息。
   function relayToMain(handle) {
     setCurrentHandle(handle);
     self.ClaudefsCore.bridge.send('handle-relay', { handle });

@@ -1,5 +1,5 @@
 // core/tools/insert-lines.js — 宿主无关。
-// 扩展工具（官方无对应，D12）：replace_lines 只能替换一个既有区间，纯插入（不删除/替换
+// 扩展工具（官方无对应）：replace_lines 只能替换一个既有区间，纯插入（不删除/替换
 // 任何既有行）需要连带把插入点前后一行抄进 new_content 一起重写，啰嗦且容易抄错、抄漏。
 // insert_lines 用单一 after_line 参数表达"插到哪之后"，无 before/after 双模式的歧义。
 //
@@ -16,8 +16,8 @@
     name: NAME,
     title: 'Insert Lines',
     description:
-      '在已连接文件夹内文本文件的指定行之后插入新内容（本产品扩展工具，官方无对应，见 ' +
-      'design-notes D12）。after_line 取 0 到文件总行数：0 表示插到文件最前，N 表示插到第 ' +
+      '在已连接文件夹内文本文件的指定行之后插入新内容（本产品扩展工具，官方无对应）。' +
+      'after_line 取 0 到文件总行数：0 表示插到文件最前，N 表示插到第 ' +
       'N 行之后；超过文件总行数会报错并附"文件共 N 行"。与 replace_lines 的分工：纯插入' +
       '（不删除/替换任何既有行）用 insert_lines；需要替换或删除既有区间用 replace_lines。' +
       '行号基准与 read_file_lines / replace_lines / grep_files 完全一致（按 "\\n" 计数，正确' +

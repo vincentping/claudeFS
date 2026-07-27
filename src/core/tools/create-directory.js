@@ -54,7 +54,7 @@
 
     // 官方"已存在也算成功"的语义保留（不报错），但文案要如实区分：先不带 create 探测
     // 目录是不是已经存在，再带 create 真正确保它存在。避免调用方把"本来就有旧文件的已有
-    // 目录"误判成"刚新建的空目录"（见 docs/archives/20260715_review_1.md P2）。
+    // 目录"误判成"刚新建的空目录"。
     let alreadyExists = true;
     try {
       await self.ClaudefsCore.fs.sandbox.resolveDirectory(root, path);

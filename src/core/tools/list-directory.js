@@ -11,8 +11,7 @@
 // name 在展示前统一过 core/fs/name-escape.js 的 escapeSpecialChars——WSL2 环境下文件名
 // 可能含 Unicode 私有使用区字符（Windows 非法字符 \ : 等的编码），这些字符大多不可见，
 // 直接输出会让 Claude 看到"缺字符"的名字，回传时构造出的路径找不到文件。转义后的名字
-// Claude 可以照抄回 path 参数，sandbox.js 的 splitPath 会自动反转义。详见
-// docs/archives/20260715_review_2_reply.md。
+// Claude 可以照抄回 path 参数，sandbox.js 的 splitPath 会自动反转义。
 (function () {
   const NAME = 'list_directory';
 

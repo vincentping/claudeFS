@@ -1,5 +1,5 @@
 // core/tools/copy-file.js — 宿主无关。
-// 扩展工具（官方无对应，D12）：现状"复制文件"只能靠 Claude 把内容读进 context 再写回，
+// 扩展工具（官方无对应）：现状"复制文件"只能靠 Claude 把内容读进 context 再写回，
 // 烧 token、还受 read_file 的 5MB 整读上限。copy_file 在扩展内部直接流式直拷，内容完全
 // 不经过 context。
 //
@@ -29,7 +29,7 @@
     description:
       'Copy a file within the connected folder. If the destination already exists, the operation ' +
       'fails (does not overwrite). Only works on files, not directories. ' +
-      '本产品扩展工具，官方无对应，见 design-notes D12。与 move_file 的关键差异：本工具流式' +
+      '本产品扩展工具，官方无对应。与 move_file 的关键差异：本工具流式' +
       '直拷（sourceFile.stream().pipeTo），内容完全不经过 Claude 的 context、不整读进内存，' +
       '因此**没有 5MB 大小上限**（move_file 因为要保证"先写成后删源"的顺序，必须整读，故有' +
       '上限）。执行前会弹出确认框展示"复制: 源路径 → 目标路径"，用户批准后才真正复制；用户' +

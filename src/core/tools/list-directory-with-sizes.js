@@ -8,7 +8,7 @@
 //  计入 combined size；这对本产品刚好是个巧合的便利，因为 FileSystemDirectoryHandle 本身
 //  就没有廉价获取递归大小的 API，不用像官方那样特意跳过，天然一致，不算刻意背离。
 //  formatSize 的单位换算是纯数学工具函数（不涉及文件 I/O），照抄官方实现以保证输出格式和
-//  桌面版一致，不属于 CLAUDE.md 说的"不可复用的 Node fs 实现"范畴。）
+//  桌面版一致——官方实现里不可直接复用的部分是 Node fs 相关代码，这个纯数学函数不属于那类。）
 (function () {
   const NAME = 'list_directory_with_sizes';
 

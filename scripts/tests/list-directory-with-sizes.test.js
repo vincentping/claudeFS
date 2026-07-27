@@ -41,7 +41,7 @@ async function main() {
       }
     ],
     [
-      '含 WSL 私有区字符的文件名，展示时转义成可见序列（docs/archives/20260715_review_2_reply.md）',
+      '含 WSL 私有区字符的文件名，展示时转义成可见序列',
       async () => {
         const realName = `has${String.fromCodePoint(0xf03a)}colon.txt`;
         const list = setup({ [realName]: 'x' });

@@ -1,6 +1,6 @@
 // scripts/tests/dispatch.test.js
 // node scripts/tests/dispatch.test.js
-// 覆盖 core/dispatch.js 的 unlisted 过滤（review_3 ⑦）：read_file 已 deprecated，
+// 覆盖 core/dispatch.js 的 unlisted 过滤：read_file 已 deprecated，
 // 不再出现在 listTools()，但 callTool('read_file', ...) 仍必须可用（不报"未知工具"）。
 const assert = require('assert');
 const { loadContext } = require('./helpers/load-context');

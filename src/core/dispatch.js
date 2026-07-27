@@ -1,6 +1,6 @@
 // core/dispatch.js — 宿主无关。
 // adapter 与 core 之间的统一接口：adapter 只准通过这里调用 core，
-// 不得直接依赖 core.tools/* 的内部实现（CLAUDE.md 架构铁律第 3 节）。
+// 不得直接依赖 core.tools/* 的内部实现。
 (function () {
   function listTools() {
     return Object.values(self.ClaudefsCore.tools || {})

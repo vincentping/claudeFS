@@ -65,8 +65,8 @@
     return matchOne(relativePath, pattern);
   }
 
-  // grep_files 专用（D12 扩展工具，契约自定，不跟随 search_files 的路径锚定语义，见
-  // docs/archives/20260715_review_1.md P1a）：pattern 不含 "/" 时按 basename 匹配——天然做到"任意
+  // grep_files 专用（扩展工具，契约自定，不跟随 search_files 的路径锚定语义）：
+  // pattern 不含 "/" 时按 basename 匹配——天然做到"任意
   // 深度"，不需要改写正则加 "**/" 前缀，且和 ripgrep --glob 的直觉一致（`*.md` 搜全项目而
   // 不是只搜根目录）；pattern 含 "/" 时按完整相对路径锚定匹配（比如 "src/*.js" 只命中 src
   // 这一层，"**/*.md" 则是用户显式要求任意深度，交给 globToRegExp 的 "**/" 处理）。分流只看

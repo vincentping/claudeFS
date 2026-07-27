@@ -7,8 +7,7 @@
 // 建立过程本身仍要用一次 window.postMessage 广播来交接 port（这是 MessageChannel
 // 跨 world 转移唯一可行的方式）。这一步理论上仍可能被"恰好也在监听 message 事件、
 // 且先我们一步读到该事件"的脚本截获——这是该模式的固有特性，握手环节（content-main.js
-// 的 sendHandshake）也有相同的暴露面，我们已经接受这个风险（详见 code review
-// docs/archives/20260714_review_1.md P0-1 与回复 docs/archives/20260714_review_1_reply.md）。真正的改善在于：
+// 的 sendHandshake）也有相同的暴露面，我们已经接受这个风险。真正的改善在于：
 // 建立完成后，所有后续流量都走私有 port，不再广播，日常无法被伪造/窃听，只有这一次
 // 极窄的建立瞬间存在理论暴露面。
 //

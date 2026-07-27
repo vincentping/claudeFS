@@ -1,7 +1,7 @@
 // core/tools/read-file-lines.js — 宿主无关。
-// 扩展工具（官方无对应；D12 立项理由：长文档只能整读或 head/tail，都不够精确定位到任意
-// 区间；不给官方 read_text_file 加参数——不魔改官方契约，见 design-notes D12——所以独立
-// 开一个新工具。和 grep_files 配套成"搜索定位 → 按行精读 → edit_file 精确修改"的完整流程）。
+// 扩展工具（官方无对应；立项理由：长文档只能整读或 head/tail，都不够精确定位到任意
+// 区间；不给官方 read_text_file 加参数——不魔改官方契约——所以独立开一个新工具。和
+// grep_files 配套成"搜索定位 → 按行精读 → edit_file 精确修改"的完整流程）。
 //
 // 边界行为（今天定死的规格）：
 //   - start_line / end_line 都从 1 开始、都包含在结果内。
@@ -52,8 +52,8 @@
     title: 'Read File Lines',
     description:
       '按行区间读取已连接文件夹内文本文件的一段内容（本产品扩展工具，官方 read_text_file ' +
-      '只支持整读/head/tail，没有任意区间；不给官方工具加参数，见 design-notes D12，另立此' +
-      '工具）。start_line 和 end_line 都从 1 开始、都包含在返回内容里。start_line 超过文件' +
+      '只支持整读/head/tail，没有任意区间；不给官方工具加参数，另立此工具）。' +
+      'start_line 和 end_line 都从 1 开始、都包含在返回内容里。start_line 超过文件' +
       '总行数会报错，错误信息里会附上"文件共 N 行"；end_line 超过文件总行数不会报错，会' +
       '自动截到文件尾，并在返回内容末尾说明实际截到了第几行、文件共多少行。行号基准与 ' +
       'grep_files 命中结果里的行号、edit_file 报错里的行号完全一致（都是按 "\\n" 计数），' +

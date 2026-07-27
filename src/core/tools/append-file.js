@@ -1,5 +1,5 @@
 // core/tools/append-file.js — 宿主无关。
-// 扩展工具（官方无对应，D12：重合的不魔改、新能力独立命名、实战痛点驱动）：append-only
+// 扩展工具（官方无对应；扩展原则：重合的不魔改、新能力独立命名、实战痛点驱动）：append-only
 // 文档（design-notes、变更日志）是最高频写模式，现状要么整读+整写（贵，diff 巨大且大多是
 // 已有内容），要么用 edit_file 匹配文件尾（脆——文件尾内容一变旧的 oldText 就失配）。
 //
@@ -19,7 +19,7 @@
     title: 'Append File',
     description:
       'Append content to the end of a file, creating it if it does not exist (like shell ">>"). ' +
-      '本产品扩展工具，官方无对应，见 design-notes D12。content 原样追加，不自动补换行——需要' +
+      '本产品扩展工具，官方无对应。content 原样追加，不自动补换行——需要' +
       '分隔时请在 content 开头自己带 "\\n"。与 write_file/edit_file 不同，本工具不整读原文件' +
       '进内存（只做定位写），因此没有 5MB 大小上限，最适合日志/变更记录这类 append-only 文件' +
       '的高频追加。执行前会弹出确认框，只展示本次要追加的内容（不需要全文 diff）；用户批准后' +

@@ -1,6 +1,6 @@
 // core/ui/inject.js — 宿主无关。
 // 往宿主页面里插入常驻 UI 元素，并在它被宿主 SPA 重渲染顶掉后自动重新插入。
-// 用 MutationObserver 而不是轮询（CLAUDE.md 架构铁律：spike 已固化的决策）。
+// 用 MutationObserver 而不是轮询。
 //
 // keepMounted 返回一个 stop() 函数：常驻 UI（连接文件夹面板）可以忽略它、永远保活；
 // 一次性 UI（diff 确认弹窗）在用户操作完之后必须调用 stop() 再移除元素，否则

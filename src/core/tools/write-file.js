@@ -5,13 +5,13 @@
 //   annotations: { title:"Write File", readOnlyHint:false, idempotentHint:true, destructiveHint:true, openWorldHint:false }
 // （schema 已核对官方 v2026.7.4 源码确认。）
 //
-// 安全铁律（CLAUDE.md 第 5 节）：批准前绝不碰磁盘。下面的顺序是关键：
+// 安全铁律：批准前绝不碰磁盘。下面的顺序是关键：
 //   1. 先用不带 create 的 resolveFile 判断文件是否已存在——这一步纯读，无副作用。
 //   2. 算好 diff / 展示内容，发确认请求，await 用户结果。
 //   3. 只有 approved === true 才会第二次调用 resolveFile（这次带 create:true）、
 //      createWritable()、write()、close()——这是整个函数里唯一真正碰磁盘的地方。
 // 用户拒绝时直接 return 一个正常 tool result（不 throw、不带 isError），
-// 因为"用户不想做这个改动"是正常结果，不是错误（决策见 docs/archives/20260714_review_2_reply.md 决策 1）。
+// 因为"用户不想做这个改动"是正常结果，不是错误。
 (function () {
   const NAME = 'write_file';
 
