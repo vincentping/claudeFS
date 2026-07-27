@@ -1,0 +1,94 @@
+{
+  "extName": {
+    "message": "claudeFS",
+    "description": "扩展名称"
+  },
+  "extDescription": {
+    "message": "让 claude.ai 授权一个本地文件夹后可以自主读写文件，零安装、无 API Key。非 Anthropic 官方产品。",
+    "description": "扩展描述，显示在 chrome://extensions 详情页"
+  },
+  "actionTitle": {
+    "message": "claudeFS",
+    "description": "工具栏图标悬停标题"
+  },
+  "statusWaitingReady": {
+    "message": "等待 claude.ai 就绪…",
+    "description": "连接面板状态行：MCP 握手进行中"
+  },
+  "statusHandshakeFailed": {
+    "message": "当前页面无法连接（未检测到可用的 Claude 对话），请刷新页面重试",
+    "description": "连接面板状态行：MCP 握手失败"
+  },
+  "statusChecking": {
+    "message": "检查已授权文件夹...",
+    "description": "连接面板状态行：正在恢复此前授权过的文件夹"
+  },
+  "statusDisconnected": {
+    "message": "未连接文件夹",
+    "description": "连接面板状态行：未连接任何文件夹"
+  },
+  "statusConnected": {
+    "message": "已连接: $1",
+    "description": "连接面板状态行：已连接文件夹；$1 为文件夹名"
+  },
+  "statusNeedsReauth": {
+    "message": "连接已过期: $1",
+    "description": "连接面板状态行：需要重新授权；$1 为文件夹名"
+  },
+  "btnConnect": {
+    "message": "连接文件夹",
+    "description": "按钮：连接一个新文件夹"
+  },
+  "btnChangeFolder": {
+    "message": "换目录",
+    "description": "按钮：切换到另一个文件夹"
+  },
+  "btnDisconnect": {
+    "message": "断开连接",
+    "description": "按钮：断开当前文件夹连接"
+  },
+  "btnReauthorize": {
+    "message": "重新授权",
+    "description": "按钮：为已过期的连接重新申请权限"
+  },
+  "previewLoading": {
+    "message": "正在读取文件夹内容预览...",
+    "description": "文件夹内容预览读取中时的占位 title"
+  },
+  "previewContains": {
+    "message": "包含: $1",
+    "description": "文件夹预览 title；$1 为逗号分隔的条目名列表"
+  },
+  "previewEmpty": {
+    "message": "(空文件夹)",
+    "description": "文件夹预览：文件夹为空时的文案"
+  },
+  "previewMore": {
+    "message": "等共 $1 项",
+    "description": "文件夹预览：条目数超过展示上限时追加；$1 为条目总数"
+  },
+  "previewFailed": {
+    "message": "$1（读取内容预览失败: $2）",
+    "description": "文件夹预览：读取失败时的 title；$1 为文件夹名，$2 为错误信息"
+  },
+  "confirmTitle": {
+    "message": "文件改动确认",
+    "description": "diff 确认弹窗标题兜底（未传入 path/title 时使用）"
+  },
+  "btnReject": {
+    "message": "拒绝",
+    "description": "diff 确认弹窗：拒绝按钮"
+  },
+  "btnApprove": {
+    "message": "批准",
+    "description": "diff 确认弹窗：批准按钮"
+  },
+  "diffOmitted": {
+    "message": "... ($1 行未变) ...",
+    "description": "diff 渲染：未变内容折叠标记；$1 为省略的行数"
+  },
+  "popupConnectHint": {
+    "message": "请到 claude.ai 页面右下角点击\"连接文件夹\"",
+    "description": "工具栏 popup：引导用户去 claude.ai 页面上的连接面板"
+  }
+}

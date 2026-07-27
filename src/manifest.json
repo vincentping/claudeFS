@@ -1,0 +1,81 @@
+{
+  "manifest_version": 3,
+  "default_locale": "en",
+  "name": "__MSG_extName__",
+  "version": "0.1.0",
+  "description": "__MSG_extDescription__",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "__MSG_actionTitle__",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://claude.ai/*"],
+      "js": [
+        "core/fs/name-escape.js",
+        "core/fs/sandbox.js",
+        "core/fs/glob.js",
+        "core/fs/binary-detect.js",
+        "core/fs/default-excludes.js",
+        "core/fs/limits.js",
+        "core/fs/handle-store.js",
+        "core/fs/read-tracker.js",
+        "core/bridge.js",
+        "core/diff.js",
+        "core/confirm.js",
+        "core/tools/list-directory.js",
+        "core/tools/list-directory-with-sizes.js",
+        "core/tools/list-allowed-directories.js",
+        "core/tools/read-file.js",
+        "core/tools/read-multiple-files.js",
+        "core/tools/read-file-lines.js",
+        "core/tools/directory-tree.js",
+        "core/tools/search-files.js",
+        "core/tools/grep-files.js",
+        "core/tools/get-file-info.js",
+        "core/tools/create-directory.js",
+        "core/tools/write-file.js",
+        "core/tools/edit-file.js",
+        "core/tools/replace-lines.js",
+        "core/tools/insert-lines.js",
+        "core/tools/move-file.js",
+        "core/tools/copy-file.js",
+        "core/tools/append-file.js",
+        "core/tools/delete-file.js",
+        "core/tools/rm-empty-dir.js",
+        "core/dispatch.js",
+        "adapters/claude/mcp/protocol.js",
+        "adapters/claude/content-main.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://claude.ai/*"],
+      "js": [
+        "core/fs/handle-store.isolated.js",
+        "core/ui/inject.js",
+        "core/ui/diff-render.js",
+        "core/bridge.isolated.js",
+        "core/confirm.isolated.js",
+        "adapters/claude/content-isolated.js"
+      ],
+      "world": "ISOLATED",
+      "run_at": "document_start"
+    }
+  ],
+  "host_permissions": ["*://claude.ai/*"]
+}

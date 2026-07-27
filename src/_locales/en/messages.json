@@ -1,0 +1,94 @@
+{
+  "extName": {
+    "message": "claudeFS",
+    "description": "Extension name"
+  },
+  "extDescription": {
+    "message": "Grants claude.ai read/write access to a local folder you authorize. No install, no API key. Unofficial, not affiliated with Anthropic.",
+    "description": "Extension description, shown on the chrome://extensions details page"
+  },
+  "actionTitle": {
+    "message": "claudeFS",
+    "description": "Toolbar icon hover title"
+  },
+  "statusWaitingReady": {
+    "message": "Waiting for claude.ai…",
+    "description": "Connection panel status line while the MCP handshake is pending"
+  },
+  "statusHandshakeFailed": {
+    "message": "Can't connect on this page (no active Claude conversation detected). Refresh the page and try again.",
+    "description": "Connection panel status line when the MCP handshake failed"
+  },
+  "statusChecking": {
+    "message": "Checking authorized folder…",
+    "description": "Connection panel status line while restoring a previously authorized folder"
+  },
+  "statusDisconnected": {
+    "message": "No folder connected",
+    "description": "Connection panel status line when no folder is connected"
+  },
+  "statusConnected": {
+    "message": "Connected: $1",
+    "description": "Connection panel status line when a folder is connected; $1 is the folder name"
+  },
+  "statusNeedsReauth": {
+    "message": "Connection expired: $1",
+    "description": "Connection panel status line when permission needs to be re-granted; $1 is the folder name"
+  },
+  "btnConnect": {
+    "message": "Connect folder",
+    "description": "Button: connect a new folder"
+  },
+  "btnChangeFolder": {
+    "message": "Change folder",
+    "description": "Button: switch to a different folder"
+  },
+  "btnDisconnect": {
+    "message": "Disconnect",
+    "description": "Button: disconnect the current folder"
+  },
+  "btnReauthorize": {
+    "message": "Re-authorize",
+    "description": "Button: re-request permission for an expired connection"
+  },
+  "previewLoading": {
+    "message": "Loading folder preview…",
+    "description": "Placeholder title shown while the folder content preview is being read"
+  },
+  "previewContains": {
+    "message": "Contains: $1",
+    "description": "Folder preview title; $1 is a comma-separated list of entry names"
+  },
+  "previewEmpty": {
+    "message": "(empty folder)",
+    "description": "Folder preview text when the folder has no entries"
+  },
+  "previewMore": {
+    "message": "and $1 more",
+    "description": "Appended to the folder preview when there are more entries than shown; $1 is the total entry count"
+  },
+  "previewFailed": {
+    "message": "$1 (failed to read preview: $2)",
+    "description": "Folder preview title when reading the preview failed; $1 is the folder name, $2 is the error message"
+  },
+  "confirmTitle": {
+    "message": "Confirm file change",
+    "description": "Diff confirmation dialog title fallback (used when no path/title is supplied)"
+  },
+  "btnReject": {
+    "message": "Reject",
+    "description": "Diff confirmation dialog: reject button"
+  },
+  "btnApprove": {
+    "message": "Approve",
+    "description": "Diff confirmation dialog: approve button"
+  },
+  "diffOmitted": {
+    "message": "... ($1 unchanged lines) ...",
+    "description": "Diff renderer: collapsed-run marker for unchanged lines; $1 is the omitted line count"
+  },
+  "popupConnectHint": {
+    "message": "Go to the claude.ai page and click \"Connect folder\" in the bottom-right corner.",
+    "description": "Toolbar popup: guidance text pointing the user to the connection panel on claude.ai"
+  }
+}
