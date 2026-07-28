@@ -6,6 +6,15 @@ Connect a local folder to [claude.ai](https://claude.ai). A Chrome extension (MV
 
 ## English
 
+### Getting Started
+
+**Prerequisites:** a Chromium-based browser (Chrome, Edge, etc.) with Manifest V3 and File System Access API support, plus a [claude.ai](https://claude.ai) account.
+
+1. Clone or download this repository.
+2. No build step needed — the extension loads directly from the `src/` folder.
+
+Then follow **Install & Use** below.
+
 ### Install & Use
 
 1. Load the extension (Developer mode → "Load unpacked").
@@ -34,6 +43,15 @@ MIT — see [LICENSE](./LICENSE).
 ## 中文
 
 一个 Chrome 扩展（MV3），让你在 [claude.ai](https://claude.ai) 授权一个本地文件夹后，Claude 能像 agent 一样直接读写该文件夹里的文件——零安装、无 API Key、无命令行。
+
+### 快速开始
+
+**前置条件：**一个支持 Manifest V3 与 File System Access API 的 Chromium 内核浏览器（Chrome、Edge 等），以及一个 [claude.ai](https://claude.ai) 账号。
+
+1. 克隆或下载本仓库。
+2. 无需构建——扩展直接从 `src/` 文件夹加载。
+
+然后按下方「安装与使用」操作。
 
 ### 安装与使用
 
