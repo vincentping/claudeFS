@@ -45,7 +45,7 @@ async function main() {
         );
         assert.strictEqual(tree.empty, undefined, '空目录应该被删除');
         const payload = getLastPayload();
-        assert.ok(payload.fullContent.includes('将删除空目录：empty'), JSON.stringify(payload));
+        assert.ok(payload.fullContent.includes('Will delete empty directory: empty'), JSON.stringify(payload));
       }
     ],
     [

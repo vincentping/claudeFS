@@ -41,7 +41,7 @@ async function main() {
         assert.strictEqual(tree['a.txt'], undefined, '源文件应该被删除');
         assert.strictEqual(tree['b.txt'].toString(), 'hello');
         const payload = getLastPayload();
-        assert.ok(payload.fullContent.includes('移动: a.txt → b.txt'), JSON.stringify(payload));
+        assert.ok(payload.fullContent.includes('Move: a.txt → b.txt'), JSON.stringify(payload));
       }
     ],
     [

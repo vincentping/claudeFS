@@ -126,11 +126,11 @@
     const { approved } = await self.ClaudefsCore.confirm.requestConfirmation({
       kind: 'replace-lines',
       path,
-      title: `替换第 ${startLine}-${actualEnd} 行: ${path}`,
+      title: `Replace lines ${startLine}-${actualEnd}: ${path}`,
       diffLines,
       fullContent:
-        `第 ${startLine}-${actualEnd} 行 旧内容:\n${oldSectionText || '(空)'}\n\n` +
-        `新内容:\n${newContent || '(空，即删除这几行)'}`,
+        `Lines ${startLine}-${actualEnd} old content:\n${oldSectionText || '(empty)'}\n\n` +
+        `New content:\n${newContent || '(empty, i.e. delete these lines)'}`,
       warning: conflictWarning || undefined
     });
     if (!approved) {

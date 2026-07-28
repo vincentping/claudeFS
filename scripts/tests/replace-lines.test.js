@@ -73,7 +73,7 @@ async function main() {
         const { replace, getLastPayload } = setup({ 'a.txt': 'line1\nline2\nline3' }, { approve: true });
         await replace({ path: 'a.txt', start_line: 2, end_line: 2, new_content: 'NEW' });
         const payload = getLastPayload();
-        assert.ok(payload.title.includes('替换第 2-2 行'), JSON.stringify(payload));
+        assert.ok(payload.title.includes('Replace lines 2-2'), JSON.stringify(payload));
         assert.ok(payload.fullContent.includes('2: line2'), JSON.stringify(payload));
         assert.ok(payload.fullContent.includes('NEW'), JSON.stringify(payload));
       }

@@ -166,7 +166,7 @@
     const { approved } = await self.ClaudefsCore.confirm.requestConfirmation({
       kind: 'edit',
       path,
-      title: `编辑文件: ${path}`,
+      title: `Edit file: ${path}`,
       diffLines,
       warning: conflictWarning || undefined
     });

@@ -61,22 +61,22 @@ async function main() {
       }
     ],
     [
-      '确认框只展示追加内容，不展示全文 diff；新建时标题标注"新建文件(追加)"',
+      '确认框只展示追加内容，不展示全文 diff；新建时标题标注"New file (append)"',
       async () => {
         const { append, getLastPayload } = setup({});
         await append({ path: 'new.txt', content: 'hello' });
         const payload = getLastPayload();
-        assert.ok(payload.title.includes('新建文件(追加)'), JSON.stringify(payload));
+        assert.ok(payload.title.includes('New file (append)'), JSON.stringify(payload));
         assert.strictEqual(payload.fullContent, 'hello', JSON.stringify(payload));
         assert.strictEqual(payload.diffLines, undefined, '不应该有全文 diff');
       }
     ],
     [
-      '已存在文件的确认框标题为"追加到文件"',
+      '已存在文件的确认框标题为"Append to file"',
       async () => {
         const { append, getLastPayload } = setup({ 'a.txt': 'abc' });
         await append({ path: 'a.txt', content: 'def' });
-        assert.ok(getLastPayload().title.includes('追加到文件'), JSON.stringify(getLastPayload()));
+        assert.ok(getLastPayload().title.includes('Append to file'), JSON.stringify(getLastPayload()));
       }
     ],
     [

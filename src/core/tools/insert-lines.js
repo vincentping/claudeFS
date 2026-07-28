@@ -88,7 +88,7 @@
     const { approved } = await self.ClaudefsCore.confirm.requestConfirmation({
       kind: 'insert-lines',
       path,
-      title: afterLine === 0 ? `在文件开头插入: ${path}` : `在第 ${afterLine} 行后插入: ${path}`,
+      title: afterLine === 0 ? `Insert at start of file: ${path}` : `Insert after line ${afterLine}: ${path}`,
       diffLines,
       warning: conflictWarning || undefined
     });

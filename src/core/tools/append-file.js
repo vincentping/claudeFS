@@ -76,7 +76,7 @@
     const { approved } = await self.ClaudefsCore.confirm.requestConfirmation({
       kind: 'append',
       path,
-      title: isNew ? `新建文件(追加): ${path}` : `追加到文件: ${path}`,
+      title: isNew ? `New file (append): ${path}` : `Append to file: ${path}`,
       fullContent: content,
       warning: conflictWarning || undefined
     });

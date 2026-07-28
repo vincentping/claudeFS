@@ -73,8 +73,8 @@
     const { approved } = await self.ClaudefsCore.confirm.requestConfirmation({
       kind: 'delete-dir',
       path,
-      title: `删除空目录: ${path}`,
-      fullContent: `将删除空目录：${path}`
+      title: `Delete empty directory: ${path}`,
+      fullContent: `Will delete empty directory: ${path}`
     });
     if (!approved) {
       return { content: [{ type: 'text', text: '用户取消了这次删除，目录未被修改。' }] };

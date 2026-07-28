@@ -82,8 +82,8 @@
     const { approved } = await self.ClaudefsCore.confirm.requestConfirmation({
       kind: 'copy',
       path: destination,
-      title: `复制文件: ${source} → ${destination}`,
-      fullContent: `复制: ${source} → ${destination}`
+      title: `Copy: ${source} → ${destination}`,
+      fullContent: `Copy: ${source} → ${destination}`
     });
     if (!approved) {
       return { content: [{ type: 'text', text: '用户取消了这次复制，未创建任何文件。' }] };

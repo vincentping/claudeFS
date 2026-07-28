@@ -130,15 +130,15 @@ async function main() {
       }
     ],
     [
-      '标题：after_line=0 时为"在文件开头插入"，否则为"在第 N 行后插入"',
+      '标题：after_line=0 时为"Insert at start of file"，否则为"Insert after line N"',
       async () => {
         const { insert, getLastPayload } = setup({ 'a.txt': 'a\nb' });
         await insert({ path: 'a.txt', after_line: 0, content: 'X' });
-        assert.ok(getLastPayload().title.includes('在文件开头插入'), JSON.stringify(getLastPayload()));
+        assert.ok(getLastPayload().title.includes('Insert at start of file'), JSON.stringify(getLastPayload()));
 
         const { insert: insert2, getLastPayload: getLastPayload2 } = setup({ 'a.txt': 'a\nb' });
         await insert2({ path: 'a.txt', after_line: 1, content: 'X' });
-        assert.ok(getLastPayload2().title.includes('在第 1 行后插入'), JSON.stringify(getLastPayload2()));
+        assert.ok(getLastPayload2().title.includes('Insert after line 1'), JSON.stringify(getLastPayload2()));
       }
     ],
     [

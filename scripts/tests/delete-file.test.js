@@ -40,8 +40,8 @@ async function main() {
         assert.ok(result.content[0].text.includes('Successfully deleted a.txt'), result.content[0].text);
         assert.strictEqual(tree['a.txt'], undefined, '文件应该被删除');
         const payload = getLastPayload();
-        assert.ok(payload.fullContent.includes('将删除：a.txt'), JSON.stringify(payload));
-        assert.ok(payload.fullContent.includes('5 字节'), JSON.stringify(payload));
+        assert.ok(payload.fullContent.includes('Will delete: a.txt'), JSON.stringify(payload));
+        assert.ok(payload.fullContent.includes('5 bytes'), JSON.stringify(payload));
       }
     ],
     [

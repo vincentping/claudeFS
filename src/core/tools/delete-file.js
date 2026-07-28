@@ -62,8 +62,8 @@
     const { approved } = await self.ClaudefsCore.confirm.requestConfirmation({
       kind: 'delete-file',
       path,
-      title: `删除文件: ${path}`,
-      fullContent: `将删除：${path}（${file.size} 字节）`,
+      title: `Delete file: ${path}`,
+      fullContent: `Will delete: ${path} (${file.size} bytes)`,
       warning: conflictWarning || undefined
     });
     if (!approved) {

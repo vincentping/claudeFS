@@ -100,8 +100,8 @@
     const { approved } = await self.ClaudefsCore.confirm.requestConfirmation({
       kind: 'move',
       path: destination,
-      title: `移动文件: ${source} → ${destination}`,
-      fullContent: `移动: ${source} → ${destination}`,
+      title: `Move: ${source} → ${destination}`,
+      fullContent: `Move: ${source} → ${destination}`,
       warning: conflictWarning || undefined
     });
     if (!approved) {

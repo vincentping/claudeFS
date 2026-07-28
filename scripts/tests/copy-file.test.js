@@ -38,7 +38,7 @@ async function main() {
         assert.strictEqual(tree['a.txt'].toString(), 'hello', '源文件应该保留（copy 不是 move）');
         assert.strictEqual(tree['b.txt'].toString(), 'hello');
         const payload = getLastPayload();
-        assert.ok(payload.fullContent.includes('复制: a.txt → b.txt'), JSON.stringify(payload));
+        assert.ok(payload.fullContent.includes('Copy: a.txt → b.txt'), JSON.stringify(payload));
       }
     ],
     [

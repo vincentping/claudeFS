@@ -72,11 +72,11 @@
     }
 
     const confirmPayload = isNew
-      ? { kind: 'write-new', path, title: `新建文件: ${path}`, fullContent: content }
+      ? { kind: 'write-new', path, title: `New file: ${path}`, fullContent: content }
       : {
           kind: 'write-overwrite',
           path,
-          title: `覆盖文件: ${path}`,
+          title: `Overwrite file: ${path}`,
           diffLines: self.ClaudefsCore.diff.computeLineDiff(oldContent, content),
           warning: conflictWarning || undefined
         };
