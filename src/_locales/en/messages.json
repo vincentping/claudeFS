@@ -4,7 +4,7 @@
     "description": "Extension name"
   },
   "extDescription": {
-    "message": "Grants claude.ai read/write access to a local folder you authorize. No install, no API key. Unofficial, not affiliated with Anthropic.",
+    "message": "Lets claude.ai read and write a local folder you authorize. No install, no API key. Unofficial, not affiliated with Anthropic.",
     "description": "Extension description, shown on the chrome://extensions details page"
   },
   "actionTitle": {
