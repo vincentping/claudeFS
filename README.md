@@ -1,4 +1,4 @@
-# claudefs
+# claudeFS
 
 Connect a local folder to [claude.ai](https://claude.ai). A Chrome extension (MV3): authorize a folder once, and Claude can read, search, and edit the files in it right from the chat — no desktop app, no API key, no command line.
 
@@ -25,7 +25,7 @@ Every write operation (write / edit / move / delete, etc.) shows a diff confirma
 
 ### Disclaimer
 
-claudefs is an independent open-source project, not affiliated with or endorsed by Anthropic. Claude is a trademark of Anthropic.
+claudeFS is an independent open-source project, not affiliated with or endorsed by Anthropic. Claude is a trademark of Anthropic.
 
 ### License
 
