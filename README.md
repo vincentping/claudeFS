@@ -1,6 +1,6 @@
 # claudeFS
 
-Connect a local folder to [claude.ai](https://claude.ai). A Chrome extension (MV3): authorize a folder once, and Claude can read, search, and edit the files in it right from the chat — no desktop app, no API key, no command line.
+Connect a local folder to [claude.ai](https://claude.ai). A browser extension (MV3) for Chrome and Edge: authorize a folder once, and Claude can read, search, and edit the files in it right from the chat — no desktop app, no API key, no command line.
 
 [English](#english) | [中文](#中文)
 
@@ -10,17 +10,16 @@ Connect a local folder to [claude.ai](https://claude.ai). A Chrome extension (MV
 
 **Prerequisites:** a Chromium-based browser (Chrome, Edge, etc.) with Manifest V3 and File System Access API support, plus a [claude.ai](https://claude.ai) account.
 
-1. Clone or download this repository.
-2. No build step needed — the extension loads directly from the `src/` folder.
+### Install
 
-Then follow **Install & Use** below.
+- **Edge (recommended):** install from the [Microsoft Edge Add-ons store](https://microsoftedge.microsoft.com/addons/detail/claudefs/mfngoeppdmboplcgllagnnggehdcigna).
+- **Chrome / from source:** clone or download this repository (no build step needed), then load the `src/` folder via Developer mode → "Load unpacked".
 
-### Install & Use
+### Use
 
-1. Load the extension (Developer mode → "Load unpacked").
-2. Open [claude.ai](https://claude.ai).
-3. Click the connect button at the bottom right of the page and pick a local folder.
-4. Ask Claude something like "read xx file" — that's it.
+1. Open [claude.ai](https://claude.ai).
+2. Click the connect button at the bottom right of the page and pick a local folder.
+3. Ask Claude something like "read xx file" — that's it.
 
 > Tip: the file tools only appear in Claude's available tool list after it discovers them — if Claude doesn't use the tools at first, rephrase and mention file operations explicitly.
 
@@ -42,23 +41,22 @@ MIT — see [LICENSE](./LICENSE).
 
 ## 中文
 
-一个 Chrome 扩展（MV3），让你在 [claude.ai](https://claude.ai) 授权一个本地文件夹后，Claude 能像 agent 一样直接读写该文件夹里的文件——零安装、无 API Key、无命令行。
+一个支持 Chrome 与 Edge 的浏览器扩展（MV3），让你在 [claude.ai](https://claude.ai) 授权一个本地文件夹后，Claude 能像 agent 一样直接读写该文件夹里的文件——零安装、无 API Key、无命令行。
 
 ### 快速开始
 
 **前置条件：**一个支持 Manifest V3 与 File System Access API 的 Chromium 内核浏览器（Chrome、Edge 等），以及一个 [claude.ai](https://claude.ai) 账号。
 
-1. 克隆或下载本仓库。
-2. 无需构建——扩展直接从 `src/` 文件夹加载。
+### 安装
 
-然后按下方「安装与使用」操作。
+- **Edge（推荐）：**从 [Microsoft Edge 扩展商店](https://microsoftedge.microsoft.com/addons/detail/claudefs/mfngoeppdmboplcgllagnnggehdcigna) 直接安装。
+- **Chrome / 源码安装：**克隆或下载本仓库（无需构建），在开发者模式下"加载已解压的扩展程序"，选择 `src/` 文件夹。
 
-### 安装与使用
+### 使用
 
-1. 加载本扩展（开发者模式加载已解压的扩展程序）。
-2. 打开 [claude.ai](https://claude.ai)。
-3. 点击页面右下角的连接按钮，选择要授权的本地文件夹。
-4. 对 Claude 说"读一下 xx 文件"之类的话即可。
+1. 打开 [claude.ai](https://claude.ai)。
+2. 点击页面右下角的连接按钮，选择要授权的本地文件夹。
+3. 对 Claude 说"读一下 xx 文件"之类的话即可。
 
 > 提示：文件工具需要 Claude 先检索到，才会出现在它当次对话可用的工具列表里——如果它一开始没用工具，换个更明确提到文件操作的说法再试一次。
 
