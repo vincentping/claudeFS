@@ -4,7 +4,7 @@ _Last updated: 2026-07-27_
 
 ## English
 
-**claudefs** is a Chrome extension that connects a user-authorized local folder to claude.ai so Claude can read and edit files in it during conversation.
+**claudeFS** is a Chrome extension that connects a user-authorized local folder to claude.ai so Claude can read and edit files in it during conversation.
 
 **Data collection: none.** The extension does not collect, store, transmit, sell, or share any user data with the developer or any third party. There are no analytics, no telemetry, no remote servers operated by this project.
 
@@ -22,7 +22,7 @@ _Last updated: 2026-07-27_
 
 ## 中文
 
-**claudefs** 是一个 Chrome 扩展，把你授权的本地文件夹接入 claude.ai，让 Claude 能在对话中读写其中的文件。
+**claudeFS** 是一个 Chrome 扩展，把你授权的本地文件夹接入 claude.ai，让 Claude 能在对话中读写其中的文件。
 
 **数据收集：无。** 扩展不收集、不存储、不传输、不出售、不共享任何用户数据给开发者或任何第三方。没有统计埋点、没有遥测、本项目不运营任何远程服务器。
 
