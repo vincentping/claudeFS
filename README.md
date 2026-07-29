@@ -12,8 +12,9 @@ Connect a local folder to [claude.ai](https://claude.ai). A browser extension (M
 
 ### Install
 
-- **Edge (recommended):** install from the [Microsoft Edge Add-ons store](https://microsoftedge.microsoft.com/addons/detail/claudefs/mfngoeppdmboplcgllagnnggehdcigna).
-- **Chrome / from source:** clone or download this repository (no build step needed), then load the `src/` folder via Developer mode → "Load unpacked". *(A Chrome Web Store listing is under review — this section will be updated once it's live.)*
+- **Chrome:** install from the [Chrome Web Store](https://chromewebstore.google.com/detail/claudefs/dgejoeopjlibbnbglaheaokkhmddedcf).
+- **Edge:** install from the [Microsoft Edge Add-ons store](https://microsoftedge.microsoft.com/addons/detail/claudefs/mfngoeppdmboplcgllagnnggehdcigna).
+- **From source:** clone or download this repository (no build step needed), then load the `src/` folder via Developer mode → "Load unpacked".
 
 ### Use
 
@@ -49,8 +50,9 @@ MIT — see [LICENSE](./LICENSE).
 
 ### 安装
 
-- **Edge（推荐）：**从 [Microsoft Edge 扩展商店](https://microsoftedge.microsoft.com/addons/detail/claudefs/mfngoeppdmboplcgllagnnggehdcigna) 直接安装。
-- **Chrome / 源码安装：**克隆或下载本仓库（无需构建），在开发者模式下"加载已解压的扩展程序"，选择 `src/` 文件夹。*（Chrome 应用商店版本正在审核中，上架后会更新此处。）*
+- **Chrome：**从 [Chrome 应用商店](https://chromewebstore.google.com/detail/claudefs/dgejoeopjlibbnbglaheaokkhmddedcf) 直接安装。
+- **Edge：**从 [Microsoft Edge 扩展商店](https://microsoftedge.microsoft.com/addons/detail/claudefs/mfngoeppdmboplcgllagnnggehdcigna) 直接安装。
+- **源码安装：**克隆或下载本仓库（无需构建），在开发者模式下"加载已解压的扩展程序"，选择 `src/` 文件夹。
 
 ### 使用
 
