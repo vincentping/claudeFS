@@ -1,6 +1,6 @@
 # claudeFS
 
-Connect a local folder to [claude.ai](https://claude.ai). A browser extension (MV3) for Chrome and Edge: authorize a folder once, and Claude can read, search, and edit the files in it right from the chat — no desktop app, no API key, no command line.
+Connect a local folder to [claude.ai](https://claude.ai). A browser extension (MV3) for Chrome and Edge: authorize a folder once, and Claude can read, search, and edit the files in it right from the chat — no desktop app, no API key, no command line. Works on the free claude.ai plan.
 
 [English](#english) | [中文](#中文)
 
@@ -41,7 +41,7 @@ MIT — see [LICENSE](./LICENSE).
 
 ## 中文
 
-一个支持 Chrome 与 Edge 的浏览器扩展（MV3），让你在 [claude.ai](https://claude.ai) 授权一个本地文件夹后，Claude 能像 agent 一样直接读写该文件夹里的文件——零安装、无 API Key、无命令行。
+一个支持 Chrome 与 Edge 的浏览器扩展（MV3），让你在 [claude.ai](https://claude.ai) 授权一个本地文件夹后，Claude 能像 agent 一样直接读写该文件夹里的文件——零安装、无 API Key、无命令行，claude.ai 免费版即可使用。
 
 ### 快速开始
 
