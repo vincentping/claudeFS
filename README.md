@@ -4,7 +4,7 @@
 [![Edge Add-ons](https://img.shields.io/badge/Edge%20Add--ons-install-0078D7?logo=microsoftedge&logoColor=white)](https://microsoftedge.microsoft.com/addons/detail/claudefs/mfngoeppdmboplcgllagnnggehdcigna)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Connect a local folder to [claude.ai](https://claude.ai). A browser extension (MV3) for Chrome and Edge: authorize a folder once, and Claude can read, search, and edit the files in it right from the chat — no desktop app, no API key, no command line. Works on the free claude.ai plan.
+Connect a local folder to [claude.ai](https://claude.ai) — the "FS" stands for file system. A browser extension (MV3) for Chrome and Edge: authorize a folder once, and Claude can read, search, and edit the files in it right from the chat — no desktop app, no API key, no command line. Works on the free claude.ai plan.
 
 [English](#english) | [中文](#中文)
 
@@ -36,6 +36,10 @@ All file operations run locally in your browser; the extension itself sends noth
 
 Every write operation (write / edit / move / delete, etc.) shows a diff confirmation dialog before touching your disk — you review the change and decide whether to approve it.
 
+### Limitations
+
+Text files only: the read, search, and edit tools work on plain-text files (code, Markdown, JSON, CSV, etc.). Binary files — PDFs, images, Office documents — are rejected with a clear error. Most per-file operations are capped at 5 MB.
+
 ### Disclaimer
 
 claudeFS is an independent open-source project, not affiliated with or endorsed by Anthropic. Claude is a trademark of Anthropic.
@@ -46,7 +50,7 @@ MIT — see [LICENSE](./LICENSE).
 
 ## 中文
 
-一个支持 Chrome 与 Edge 的浏览器扩展（MV3），让你在 [claude.ai](https://claude.ai) 授权一个本地文件夹后，Claude 能像 agent 一样直接读写该文件夹里的文件——零安装、无 API Key、无命令行，claude.ai 免费版即可使用。
+一个支持 Chrome 与 Edge 的浏览器扩展（MV3，名字中的 FS 即 file system 文件系统），让你在 [claude.ai](https://claude.ai) 授权一个本地文件夹后，Claude 能像 agent 一样直接读写该文件夹里的文件——零安装、无 API Key、无命令行，claude.ai 免费版即可使用。
 
 ### 快速开始
 
@@ -73,6 +77,10 @@ MIT — see [LICENSE](./LICENSE).
 ### 安全
 
 所有写操作（write / edit / move / delete 等）执行前都会弹出 diff 确认，你可以查看改动内容后再决定是否放行。
+
+### 限制
+
+仅支持文本文件：读取、搜索、编辑工具只处理纯文本文件（代码、Markdown、JSON、CSV 等），二进制文件（PDF、图片、Office 文档等）会被明确拒绝。多数单文件操作有 5MB 大小上限。
 
 ### 免责声明
 
