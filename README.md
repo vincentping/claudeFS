@@ -6,6 +6,10 @@
 
 Connect a local folder to [claude.ai](https://claude.ai) — the "FS" stands for file system. A browser extension (MV3) for Chrome and Edge: authorize a folder once, and Claude can read, search, and edit the files in it right from the chat — no desktop app, no API key, no command line. Works on the free claude.ai plan.
 
+![claudeFS demo — Claude edits a local file with diff confirmation](docs/demo.gif)
+
+▶ [Watch the full demo (90s)](https://youtu.be/j7PDsVeVXGw)
+
 [English](#english) | [中文](#中文)
 
 ## English
