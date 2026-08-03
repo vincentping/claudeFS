@@ -12,10 +12,14 @@
     'mp3', 'mp4', 'mov', 'avi', 'woff', 'woff2', 'ttf', 'otf'
   ]);
 
-  function hasBinaryExtension(name) {
+  // 共享给 read-media-file.js 的 MIME 推断复用，避免两处各写一份同样的扩展名切分逻辑。
+  function getExtension(name) {
     const dot = name.lastIndexOf('.');
-    if (dot === -1) return false;
-    return BINARY_EXTENSIONS.has(name.slice(dot + 1).toLowerCase());
+    return dot === -1 ? '' : name.slice(dot + 1).toLowerCase();
+  }
+
+  function hasBinaryExtension(name) {
+    return BINARY_EXTENSIONS.has(getExtension(name));
   }
 
   async function sniffHasNulByte(file) {
@@ -38,5 +42,5 @@
 
   self.ClaudefsCore = self.ClaudefsCore || {};
   self.ClaudefsCore.fs = self.ClaudefsCore.fs || {};
-  self.ClaudefsCore.fs.binaryDetect = { hasBinaryExtension, sniffHasNulByte, detectBinaryReason };
+  self.ClaudefsCore.fs.binaryDetect = { hasBinaryExtension, sniffHasNulByte, detectBinaryReason, getExtension };
 })();

@@ -15,8 +15,9 @@
 //     绝对磁盘路径（隐私考虑，File System Access API 本身就不给），也没必要伪造一个不可
 //     解析的 file:// 路径误导模型；改用 `claudefs://<相对已连接文件夹的规范化路径>` 表达
 //     "这是哪个文件"，明确标注不是真实可解析的 URL。
-//   - 不经 core/fs/binary-detect.js 的二进制嗅探拒绝：media 本来就是读二进制，这正是它与
-//     read_text_file 的分工边界，两者不应共用"拒绝二进制"这条逻辑。
+//   - 不用 core/fs/binary-detect.js 的二进制嗅探拒绝：media 本来就是读二进制，这正是它与
+//     read_text_file 的分工边界，两者不应共用"拒绝二进制"这条逻辑（本文件只复用该模块的
+//     getExtension 扩展名切分工具函数，不调用 detectBinaryReason/hasBinaryExtension）。
 (function () {
   // btoa 单次处理的字节窗口：String.fromCharCode.apply 对参数个数有上限（不同引擎的调用栈
   // 上限不同，但远小于典型媒体文件的字节数），必须分块拼字符串，只在最后对完整二进制字符串
@@ -39,9 +40,8 @@
   };
 
   function inferMimeType(name) {
-    const dot = name.lastIndexOf('.');
-    if (dot === -1) return 'application/octet-stream';
-    return MIME_TYPES[name.slice(dot + 1).toLowerCase()] || 'application/octet-stream';
+    const ext = self.ClaudefsCore.fs.binaryDetect.getExtension(name);
+    return MIME_TYPES[ext] || 'application/octet-stream';
   }
 
   function arrayBufferToBase64(buffer) {

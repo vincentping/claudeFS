@@ -63,11 +63,9 @@ async function main() {
           const outputSchema = tools[name].definition.outputSchema;
           assert.ok(outputSchema, `${name} 缺少 outputSchema`);
           if (name === 'read_media_file') {
+            // 断言 content 是数组即已经证明它偏离了共享的 { content: string } 形状
+            // （EXPECTED_OUTPUT_SCHEMA 要求 content 是字符串），不需要再单独断言两者不相等。
             assert.strictEqual(outputSchema.properties.content.type, 'array', 'read_media_file 的 content 应为数组（content block 列表），不是字符串');
-            assert.ok(
-              JSON.stringify(outputSchema) !== JSON.stringify(EXPECTED_OUTPUT_SCHEMA),
-              'read_media_file 的 outputSchema 不应与文本工具共享形状相同（它的 content 是数组不是字符串）'
-            );
             continue;
           }
           // 工具在 vm sandbox context 里加载，对象跨 realm，deepStrictEqual 会因为原型链不同

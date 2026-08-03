@@ -10,16 +10,16 @@ const vm = require('vm');
 
 const SRC_DIR = path.join(__dirname, '..', '..', '..', 'src');
 
+// 一个干净的 vm context 不会自带 Node 的额外全局对象（这几个 WHATWG API 不是 ECMAScript
+// 内置，Uint8Array 之类才是）；read-file.js/read-file-lines.js 的流式读取用 TextDecoder，
+// append-file.js 算字节长度用 TextEncoder，read-media-file.js 编码 base64 用 btoa——需要哪个
+// 就加进这个集合，不用在 loadContext 里逐条手写赋值。
+const BROWSER_GLOBALS_FOR_TESTS = { TextDecoder, TextEncoder, btoa };
+
 function loadContext(relativeFiles) {
   const sandboxGlobal = {};
   sandboxGlobal.self = sandboxGlobal;
-  // 一个干净的 vm context 不会自带 Node 的额外全局对象（TextDecoder/TextEncoder/btoa 等
-  // WHATWG API 不是 ECMAScript 内置，Uint8Array 之类才是）；read-file.js/read-file-lines.js
-  // 的流式读取用 TextDecoder，append-file.js 算字节长度用 TextEncoder，read-media-file.js
-  // 编码 base64 用 btoa，这里显式注入。
-  sandboxGlobal.TextDecoder = TextDecoder;
-  sandboxGlobal.TextEncoder = TextEncoder;
-  sandboxGlobal.btoa = btoa;
+  Object.assign(sandboxGlobal, BROWSER_GLOBALS_FOR_TESTS);
   const ctx = vm.createContext(sandboxGlobal);
   for (const rel of relativeFiles) {
     const filePath = path.join(SRC_DIR, rel);

@@ -6,7 +6,13 @@ const { loadContext } = require('./helpers/load-context');
 const { makeRootHandle } = require('./helpers/fake-fs');
 const { runTests } = require('./helpers/mini-test');
 
-const CORE_FILES = ['core/fs/name-escape.js', 'core/fs/sandbox.js', 'core/fs/limits.js', 'core/tools/read-media-file.js'];
+const CORE_FILES = [
+  'core/fs/name-escape.js',
+  'core/fs/sandbox.js',
+  'core/fs/binary-detect.js',
+  'core/fs/limits.js',
+  'core/tools/read-media-file.js'
+];
 
 function setup(tree) {
   const root = loadContext(CORE_FILES);
