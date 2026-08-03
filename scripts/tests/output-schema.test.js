@@ -1,12 +1,12 @@
 // scripts/tests/output-schema.test.js
 // node scripts/tests/output-schema.test.js
-// 覆盖性断言：20 个工具文件手工逐个补 outputSchema，漏一个不会
+// 覆盖性断言：21 个工具文件手工逐个补 outputSchema，漏一个不会
 // 有任何报错、也不会有任何其它测试变红——这里遍历全部注册逐个核对，兜住这个空档。
 const assert = require('assert');
 const { loadContext } = require('./helpers/load-context');
 const { runTests } = require('./helpers/mini-test');
 
-// core/tools/* 全部 20 个文件（21 个注册，read-file.js 注册两个），只依赖 fs 层，
+// core/tools/* 全部 21 个文件（22 个注册，read-file.js 注册两个），只依赖 fs 层，
 // 不依赖 bridge/confirm/dispatch，加载顺序与 manifest.json 里 core/tools/* 段一致。
 const CORE_FILES = [
   'core/fs/name-escape.js',
@@ -21,6 +21,7 @@ const CORE_FILES = [
   'core/tools/list-directory-with-sizes.js',
   'core/tools/list-allowed-directories.js',
   'core/tools/read-file.js',
+  'core/tools/read-media-file.js',
   'core/tools/read-multiple-files.js',
   'core/tools/read-file-lines.js',
   'core/tools/directory-tree.js',
@@ -45,18 +46,30 @@ const EXPECTED_OUTPUT_SCHEMA = {
   required: ['content']
 };
 
+// read_media_file 是唯一的例外：输出是 content block 数组（image/audio/resource），
+// 不是其余 21 个工具共用的 { content: string } 形状——它读的是二进制媒体，天然不能套用
+// 文本工具的输出契约。这里只断言它确实是数组形状，不强行拉平成同一份共享常量。
+
 async function main() {
   await runTests([
     [
-      '全部 21 个工具注册都有 outputSchema，且与共享形状一致',
+      '全部 22 个工具注册都有 outputSchema，21 个文本工具与共享形状一致，read_media_file 单独核对',
       async () => {
         const root = loadContext(CORE_FILES);
         const tools = root.ClaudefsCore.tools;
         const names = Object.keys(tools);
-        assert.strictEqual(names.length, 21, `期望 21 个注册，实际 ${names.length}：${names.join(',')}`);
+        assert.strictEqual(names.length, 22, `期望 22 个注册，实际 ${names.length}：${names.join(',')}`);
         for (const name of names) {
           const outputSchema = tools[name].definition.outputSchema;
           assert.ok(outputSchema, `${name} 缺少 outputSchema`);
+          if (name === 'read_media_file') {
+            assert.strictEqual(outputSchema.properties.content.type, 'array', 'read_media_file 的 content 应为数组（content block 列表），不是字符串');
+            assert.ok(
+              JSON.stringify(outputSchema) !== JSON.stringify(EXPECTED_OUTPUT_SCHEMA),
+              'read_media_file 的 outputSchema 不应与文本工具共享形状相同（它的 content 是数组不是字符串）'
+            );
+            continue;
+          }
           // 工具在 vm sandbox context 里加载，对象跨 realm，deepStrictEqual 会因为原型链不同
           // 误判结构相同的对象不相等；这里改用 JSON 序列化做纯结构比较。
           // 注意 JSON.stringify 对 key 顺序敏感：语义相同但字段顺序不同的 outputSchema

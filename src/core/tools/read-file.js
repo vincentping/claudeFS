@@ -17,7 +17,7 @@
   async function rejectIfBinary(file) {
     const reason = await self.ClaudefsCore.fs.binaryDetect.detectBinaryReason(file);
     if (reason) {
-      throw new Error(`${reason}，暂不支持读取（二阶段的 read_media_file 会支持）。`);
+      throw new Error(`${reason}，暂不支持读取（图片/音频等二进制文件请用 read_media_file 读取）。`);
     }
   }
 

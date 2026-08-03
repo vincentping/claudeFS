@@ -40,6 +40,7 @@
         "core/tools/list-directory-with-sizes.js",
         "core/tools/list-allowed-directories.js",
         "core/tools/read-file.js",
+        "core/tools/read-media-file.js",
         "core/tools/read-multiple-files.js",
         "core/tools/read-file-lines.js",
         "core/tools/directory-tree.js",
