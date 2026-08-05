@@ -6,6 +6,8 @@
 
 Connect a local folder to [claude.ai](https://claude.ai) — the "FS" stands for file system. A browser extension (MV3) for Chrome and Edge: authorize a folder once, and Claude can read, search, and edit the files in it right from the chat — no desktop app, no API key, no command line. Works on the free claude.ai plan.
 
+**Who it's for:** anyone whose work lives in a pile of text files — code, Markdown, notes, drafts — and who wants to keep discussing them with Claude in the browser instead of re-uploading them every session. It complements terminal and IDE tools rather than replacing them: the chat side stays for thinking and review, while the files are always current and conclusions get written straight back.
+
 ![claudeFS demo — Claude edits a local file with diff confirmation](docs/demo.gif)
 
 ▶ [Watch the full demo (90s)](https://youtu.be/j7PDsVeVXGw)
@@ -42,7 +44,7 @@ Every write operation (write / edit / move / delete, etc.) shows a diff confirma
 
 ### Limitations
 
-Text files only: the read, search, and edit tools work on plain-text files (code, Markdown, JSON, CSV, etc.). Binary files — PDFs, images, Office documents — are rejected with a clear error. Most per-file operations are capped at 5 MB.
+The text tools are text-only: read, search, and edit work on plain-text files (code, Markdown, JSON, CSV, etc.). Images and audio are handled separately by `read_media_file`, which hands them to Claude as native image/audio content. Office documents (docx / xlsx / pptx) and PDFs are not supported — use claude.ai's own file upload for those. Most per-file operations are capped at 5 MB.
 
 ### Disclaimer
 
@@ -55,6 +57,8 @@ MIT — see [LICENSE](./LICENSE).
 ## 中文
 
 一个支持 Chrome 与 Edge 的浏览器扩展（MV3，名字中的 FS 即 file system 文件系统），让你在 [claude.ai](https://claude.ai) 授权一个本地文件夹后，Claude 能像 agent 一样直接读写该文件夹里的文件——零安装、无 API Key、无命令行，claude.ai 免费版即可使用。
+
+**适合谁用：**工作内容是一堆文本文件的人——代码、Markdown、笔记、草稿——想在浏览器里持续和 Claude 讨论这些文件，而不是每开一次新对话就重新上传一遍。它与终端和 IDE 里的工具是互补分工：对话端负责思考与审阅，文件始终是最新的，讨论结论能直接写回文件夹。
 
 ### 快速开始
 
@@ -84,7 +88,7 @@ MIT — see [LICENSE](./LICENSE).
 
 ### 限制
 
-仅支持文本文件：读取、搜索、编辑工具只处理纯文本文件（代码、Markdown、JSON、CSV 等），二进制文件（PDF、图片、Office 文档等）会被明确拒绝。多数单文件操作有 5MB 大小上限。
+文本工具仅限纯文本：读取、搜索、编辑只处理纯文本文件（代码、Markdown、JSON、CSV 等）。图片与音频由 `read_media_file` 单独支持，会作为原生的图片／音频内容交给 Claude。Office 文档（docx / xlsx / pptx）与 PDF 不支持——这类文件请走 claude.ai 自身的上传功能。多数单文件操作有 5MB 大小上限。
 
 ### 免责声明
 
