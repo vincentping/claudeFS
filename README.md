@@ -16,6 +16,8 @@ Connect a local folder to [claude.ai](https://claude.ai) — the "FS" stands for
 
 ## English
 
+📝 [Read the announcement post](https://vincentping.com/en/claudefs-claude-ai-local-folder)
+
 ### Getting Started
 
 **Prerequisites:** a Chromium-based browser (Chrome, Edge, etc.) with Manifest V3 and File System Access API support, plus a [claude.ai](https://claude.ai) account.
@@ -55,6 +57,8 @@ claudeFS is an independent open-source project, not affiliated with or endorsed 
 MIT — see [LICENSE](./LICENSE).
 
 ## 中文
+
+📝 [阅读发布博文](https://vincentping.com/cn/claudefs-claude-ai-local-folder)
 
 一个支持 Chrome 与 Edge 的浏览器扩展（MV3，名字中的 FS 即 file system 文件系统），让你在 [claude.ai](https://claude.ai) 授权一个本地文件夹后，Claude 能像 agent 一样直接读写该文件夹里的文件——零安装、无 API Key、无命令行，claude.ai 免费版即可使用。
 
