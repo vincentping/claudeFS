@@ -48,6 +48,8 @@ Every write operation (write / edit / move / delete, etc.) shows a diff confirma
 
 The text tools are text-only: read, search, and edit work on plain-text files (code, Markdown, JSON, CSV, etc.). Images and audio are handled separately by `read_media_file`, which hands them to Claude as native image/audio content. Office documents (docx / xlsx / pptx) and PDFs are not supported — use claude.ai's own file upload for those. Most per-file operations are capped at 5 MB.
 
+**WSL folders:** since October 2026, Chrome and Edge refuse to open any folder under `\\wsl.localhost\` or `\\wsl$\` ("can't open this folder because it contains system files"), including through a mapped drive letter. This is a deliberate Chromium security change ([issue 553114097](https://issues.chromium.org/issues/553114097)), not a claudeFS bug, and there is no browser setting to turn it off. To use claudeFS, keep the project in a regular Windows folder (e.g. `D:\projects\repo`). A request to allow ordinary WSL subfolders is tracked in [issue 573422635](https://issues.chromium.org/issues/573422635) — star it if this affects you.
+
 ### Disclaimer
 
 claudeFS is an independent open-source project, not affiliated with or endorsed by Anthropic. Claude is a trademark of Anthropic.
@@ -93,6 +95,8 @@ MIT — see [LICENSE](./LICENSE).
 ### 限制
 
 文本工具仅限纯文本：读取、搜索、编辑只处理纯文本文件（代码、Markdown、JSON、CSV 等）。图片与音频由 `read_media_file` 单独支持，会作为原生的图片／音频内容交给 Claude。Office 文档（docx / xlsx / pptx）与 PDF 不支持——这类文件请走 claude.ai 自身的上传功能。多数单文件操作有 5MB 大小上限。
+
+**WSL 目录：**自 2026 年 10 月起，Chrome 与 Edge 拒绝打开 `\\wsl.localhost\` 或 `\\wsl$\` 下的任何文件夹（提示"包含系统文件"），映射成盘符也一样。这是 Chromium 有意为之的安全修复（[issue 553114097](https://issues.chromium.org/issues/553114097)），并非 claudeFS 的问题，浏览器里也没有可以关闭它的设置。要使用 claudeFS，请把项目放在普通的 Windows 文件夹里（如 `D:\projects\repo`）。放开普通 WSL 子目录的请求见 [issue 573422635](https://issues.chromium.org/issues/573422635)，受影响的话欢迎去点星支持。
 
 ### 免责声明
 
