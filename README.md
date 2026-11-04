@@ -48,7 +48,9 @@ Every write operation (write / edit / move / delete, etc.) shows a diff confirma
 
 The text tools are text-only: read, search, and edit work on plain-text files (code, Markdown, JSON, CSV, etc.). Images and audio are handled separately by `read_media_file`, which hands them to Claude as native image/audio content. Office documents (docx / xlsx / pptx) and PDFs are not supported — use claude.ai's own file upload for those. Most per-file operations are capped at 5 MB.
 
-**WSL folders:** open the project through a path like `\\wsl.localhost\Ubuntu\home\<user>\projects\repo`. This needs Chrome 156.0.8078.88+, 157.0.8103.39+ or 158+; Edge may take longer to get the fix. Chromium still blocks the home folder itself, its hidden entries (`.ssh`, `.config`, …), `~/bin`, `/root`, `/mnt` and other system folders, and every `\\wsl$\` path. Older versions refuse every WSL folder ("can't open this folder because it contains system files"). On those versions, keep the project in a regular Windows folder such as `D:\projects\repo`. Background: [issue 573422635](https://issues.chromium.org/issues/573422635), [docs/chromium-wsl-folder-access.md](docs/chromium-wsl-folder-access.md).
+### History
+
+- **2026-10 – 2026-11 — WSL folders blocked, then restored.** A Chromium security fix ([issue 553114097](https://issues.chromium.org/issues/553114097)) made Chrome and Edge refuse every folder under `\\wsl.localhost\` ("contains system files"). claudeFS reported the regression as [issue 573422635](https://issues.chromium.org/issues/573422635). Chromium fixed it on 2026-10-29 and merged the fix to M156–M158, so project folders under the WSL home directory open again. Full timeline and details: [docs/chromium-wsl-folder-access.md](docs/chromium-wsl-folder-access.md).
 
 ### Disclaimer
 
@@ -96,7 +98,9 @@ MIT — see [LICENSE](./LICENSE).
 
 文本工具仅限纯文本：读取、搜索、编辑只处理纯文本文件（代码、Markdown、JSON、CSV 等）。图片与音频由 `read_media_file` 单独支持，会作为原生的图片／音频内容交给 Claude。Office 文档（docx / xlsx / pptx）与 PDF 不支持——这类文件请走 claude.ai 自身的上传功能。多数单文件操作有 5MB 大小上限。
 
-**WSL 目录：**通过 `\\wsl.localhost\Ubuntu\home\<user>\projects\repo` 这样的路径打开项目。需要 Chrome 156.0.8078.88+、157.0.8103.39+ 或 158+；Edge 可能稍晚才包含此修复。Chromium 仍会拦截 home 目录本身、其中的隐藏条目（`.ssh`、`.config` 等）、`~/bin`、`/root`、`/mnt` 等系统目录，以及所有 `\\wsl$\` 路径。更早的版本会拒绝打开任何 WSL 文件夹（提示"包含系统文件"），这时请把项目放在普通的 Windows 文件夹里（如 `D:\projects\repo`）。背景见 [issue 573422635](https://issues.chromium.org/issues/573422635) 及 [docs/chromium-wsl-folder-access.md](docs/chromium-wsl-folder-access.md)。
+### 更新历史
+
+- **2026-10 – 2026-11 — WSL 目录被拦截，后恢复。**Chromium 的一个安全修复（[issue 553114097](https://issues.chromium.org/issues/553114097)）使 Chrome 与 Edge 拒绝打开 `\\wsl.localhost\` 下的任何文件夹（提示"包含系统文件"）。claudeFS 将这一回归报告为 [issue 573422635](https://issues.chromium.org/issues/573422635)，Chromium 于 2026-10-29 修复并合入 M156–M158，WSL home 目录下的项目文件夹恢复可用。完整经过与细节见 [docs/chromium-wsl-folder-access.md](docs/chromium-wsl-folder-access.md)。
 
 ### 免责声明
 
