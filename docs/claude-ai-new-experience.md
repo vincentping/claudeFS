@@ -1,6 +1,6 @@
 # claude.ai new experience: claudeFS tools never reach the model
 
-- Status: **in progress** — experimental fix on branch `experiment/new-experience`, waiting for test results
+- Status: **working, verified 2026-11-05** on a new-experience account — experimental fix on branch `experiment/new-experience`
 - Affects: accounts moved to the claude.ai "new experience" (Chat and Cowork unified, internally "hub" / "New chat engine")
 - Recorded: 2026-11-05
 
@@ -52,12 +52,24 @@ claudeFS already impersonates the desktop shell's `mcp-server-connected` handsha
   - `localStorage.setItem('claudefs.desktopShim', 'off')` disables it; `claudefs.desktopShimVersion` overrides the version
 - `src/adapters/claude/debug.js`: `claudefsDebug()` in the console prints a report (shim state, detected experience, handshake, MCP call counts, PerformAction body sizes and whether claudeFS tool names appear in them). It records no chat or file content.
 
+The reported version matters: the new experience shows a hard "Upgrade your app" wall when the version is below its minimum. `0.1.0` is rejected; `0.383.0` (the desktop app version seen in app_start on 2026-11-05) clears it. The shim defaults to `0.383.0`; override at runtime with `localStorage.setItem('claudefs.desktopShimVersion', '…')`.
+
 Known risks:
 
-- The whole page now treats itself as the desktop app (`client_platform`, desktop-only UI such as device verification or "Trusted folders" may appear).
-- The server may reject or ignore `client_tools` from a non-desktop client.
+- The whole page now treats itself as the desktop app (`client_platform`, desktop-only UI such as device verification or "Trusted folders" may appear). Observed in testing: only a `cmdK` desktop binding was registered; no device-verification or Trusted-folders UI appeared.
+- The server accepts `client_tools` from this client (confirmed in testing — the tools were called and returned results).
 - The shim applies to old-experience accounts too, so it must not ship to `main` until it is tested on both.
-- It depends on claude.ai internals and can break with any frontend update.
+- It depends on claude.ai internals and can break with any frontend update, including a future bump to the minimum version behind the upgrade wall.
+
+## Test result (2026-11-05)
+
+Loaded the branch on a new-experience account and sent "read the readme.md in the linked folder":
+
+- PerformAction request for the user's message: **23,544 bytes, carrying all 21 claudeFS tool names** (before the fix, the reporter saw 100–382 byte bodies with none).
+- Claude made **7 claudeFS tool calls** (`search_files`, `list_allowed_directories`, `list_directory`, `read_text_file`) and got results back.
+- No errors; no upgrade wall (with version 0.383.0); no device-verification prompt.
+
+The one `read_text_file` that returned `ok:false` was Claude guessing the filename before searching; the connected folder happened to contain no readme, which is unrelated to the mechanism.
 
 ## How it was investigated
 
@@ -96,4 +108,4 @@ Where things were in the 2026-11-05 build (`gated_imports_build_id` `9f9f2a4beb`
 | 2026-11-04 | First look at the frontend loaded by an old-experience account: session-based MCP code and `ClientToolCall` were present, but `PerformAction` was not, so the new experience had to be a separate bundle. Asked the reporter for the script list. |
 | 2026-11-04 | The reporter sent app_start files from both accounts, which exposed `claude_ai_hub_web_delivery`. |
 | 2026-11-05 | Traced the hub bundle to the `omitServer` / desktop check described above. Pushed `experiment/new-experience` with the shim and diagnostics, and sent the reporter a test link. |
-| — | Waiting for test results from a new-experience account. |
+| 2026-11-05 | Tested on a new-experience account. Hit the "Upgrade your app" wall at version 0.1.0; raised the shim version to 0.383.0 and it cleared. Tools then reached the model: 23.5 KB PerformAction with all 21 tools, 7 successful tool calls. Fix confirmed working. |
