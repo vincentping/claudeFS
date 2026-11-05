@@ -3,6 +3,7 @@
 - Status: **fixed in claudeFS 0.2.0** — verified on new- and classic-experience accounts (2026-11-05)
 - Affects: accounts moved to the claude.ai "new experience". What reliably tells it apart: the app_start bootstrap gates in the `claude_ai_hub_web_delivery` bundle (the `claude_ai_hub_backend` gate), and messages are sent through `PerformAction` instead of `/completion`. The UI strings that come with it call it "Chat and Cowork unified" / "New chat engine". On the one new-experience account tested, the new-chat page had no Chat / Cowork switch (the classic experience has one), but whether Chat and Cowork are actually merged there was not verified.
 - Recorded: 2026-11-05
+- Reported and tested by: Ahmet Soyköse (Türkiye)
 
 ## Symptoms
 
@@ -71,11 +72,11 @@ The shim reports `0.383.0`: a value well above that floor and the one the tools 
 
 ## Test results (2026-11-05)
 
-**New experience** (reporter's account): the PerformAction request for the user's message was **23,544 bytes and carried all 21 claudeFS tool names** (before: 100–382 bytes with none). Claude made 7 claudeFS tool calls (`search_files`, `list_allowed_directories`, `list_directory`, `read_text_file`) and got results back. One `read_text_file` returned `ok:false` because Claude guessed a filename before searching; the folder had no readme.
+**New experience** (Ahmet's account): the PerformAction request for the user's message was **23,544 bytes and carried all 21 claudeFS tool names** (before: 100–382 bytes with none). Claude made 7 claudeFS tool calls (`search_files`, `list_allowed_directories`, `list_directory`, `read_text_file`) and got results back. One `read_text_file` returned `ok:false` because Claude guessed a filename before searching; the folder had no readme.
 
 **Classic experience** (maintainer's account): in Chat mode `list_allowed_directories`, `list_directory` and `read_text_file` all worked. Compared with the shim switched off, the UI was the same apart from the small controls noted above.
 
-**Reporter's retest** on both of their accounts: the tools worked on both. They found that the login page turned into the "Claude for Windows" screen while the extension was on, which led to the sign-in handling above. Verified afterwards: with the extension on, the login page shows the normal Google / Apple / email options, and after signing in the page reloads once by itself with the shim and claudeFS active.
+**Ahmet's retest** on both of Ahmet's accounts: the tools worked on both. Ahmet found that the login page turned into the "Claude for Windows" screen while the extension was on, which led to the sign-in handling above. Verified afterwards: with the extension on, the login page shows the normal Google / Apple / email options, and after signing in the page reloads once by itself with the shim and claudeFS active.
 
 ## How it was investigated
 
@@ -110,10 +111,10 @@ Where things were in the 2026-11-05 build (`gated_imports_build_id` `9f9f2a4beb`
 
 | Date | Event |
 |---|---|
-| 2026-11-03 | A user reported that claudeFS works on an old-experience account but not on a new-experience one, with detailed logs (handshake OK, no `tools/call`, small PerformAction bodies). |
-| 2026-11-04 | First look at the frontend loaded by an old-experience account: session-based MCP code and `ClientToolCall` were present, but `PerformAction` was not, so the new experience had to be a separate bundle. Asked the reporter for the script list. |
-| 2026-11-04 | The reporter sent app_start files from both accounts, which exposed `claude_ai_hub_web_delivery`. |
-| 2026-11-05 | Traced the hub bundle to the `omitServer` / desktop check described above. Pushed `experiment/new-experience` with the shim and diagnostics, and sent the reporter a test link. |
+| 2026-11-03 | Ahmet Soyköse (Türkiye) reported that claudeFS works on an old-experience account but not on a new-experience one, with detailed logs (handshake OK, no `tools/call`, small PerformAction bodies). |
+| 2026-11-04 | First look at the frontend loaded by an old-experience account: session-based MCP code and `ClientToolCall` were present, but `PerformAction` was not, so the new experience had to be a separate bundle. Asked Ahmet for the script list. |
+| 2026-11-04 | Ahmet sent app_start files from both accounts, which exposed `claude_ai_hub_web_delivery`. |
+| 2026-11-05 | Traced the hub bundle to the `omitServer` / desktop check described above. Pushed `experiment/new-experience` with the shim and diagnostics, and sent Ahmet a test link. |
 | 2026-11-05 | Tested on a new-experience account. Hit the "Upgrade your app" wall at version 0.1.0; raised the shim version to 0.383.0 and it cleared. Tools then reached the model: 23.5 KB PerformAction with all 21 tools, 7 successful tool calls. Fix confirmed working. |
 | 2026-11-05 | Traced the wall to the remote config `nest_version_info` and measured the floor by trying versions: `<0.3.0` is blocked. Kept 0.383.0 as a fixed default rather than resolving the version dynamically. |
-| 2026-11-05 | Tested the classic experience (Chat mode works; no meaningful side effects). The reporter retested on both experiences and found the sign-in page problem; fixed by leaving sign-in pages alone and reloading once after sign-in. Released as 0.2.0. |
+| 2026-11-05 | Tested the classic experience (Chat mode works; no meaningful side effects). Ahmet retested on both experiences and found the sign-in page problem; fixed by leaving sign-in pages alone and reloading once after sign-in. Released as 0.2.0. |
