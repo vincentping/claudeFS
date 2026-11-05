@@ -3,7 +3,7 @@
 // 只负责协议翻译，具体工具执行全部经 core/dispatch.js（架构铁律：adapter 不碰 core 内部实现）。
 (function () {
   const SERVER_NAME = 'claudeFS';
-  const SERVER_VERSION = '0.1.0';
+  const SERVER_VERSION = '0.2.0';
 
   async function handleMessage(msg, reply) {
     if (!msg || typeof msg !== 'object') return;

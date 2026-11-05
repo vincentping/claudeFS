@@ -1,9 +1,15 @@
-// adapters/claude/debug.js — diagnostics for the new-experience test build.
-// MAIN world, document_start, loaded first.
+// adapters/claude/debug.js — opt-in diagnostics. MAIN world, document_start, loaded first.
 //
-// Purpose: we can't see the tester's screen, so the key signals are collected into one
-// report. The tester runs  claudefsDebug()  in the DevTools console on claude.ai; it prints
-// the report and copies it to the clipboard so it can be pasted straight into an email.
+// Off by default: unless the user turns it on, this file only defines a claudefsDebug()
+// helper that explains how to enable it, and does nothing else (no fetch observer, no
+// recording). To turn it on, run in the DevTools console on claude.ai and reload:
+//   localStorage.setItem('claudefs.debug', 'on')
+// and to turn it off again: localStorage.removeItem('claudefs.debug')
+//
+// Purpose: when a user reports a problem we can't see their screen, so the key signals are
+// collected into one report. The user runs  claudefsDebug()  in the DevTools console; it
+// prints the report and copies it to the clipboard so it can be pasted into a bug report.
+// Nothing is ever sent anywhere by the extension.
 //
 // Only sizes, counts, booleans and tool names are recorded. No conversation content, file
 // content, or request/response bodies are stored.
@@ -20,7 +26,25 @@
 //                    appear in it (if they do, client_tools carried our tools)
 (function () {
   const TAG = '[claudefs:debug]';
-  const BUILD = 'claudeFS-new 0.1.1 (new-experience test)';
+  const BUILD = 'claudeFS 0.2.0';
+
+  let enabled = false;
+  try {
+    enabled = window.localStorage.getItem('claudefs.debug') === 'on';
+  } catch {
+    enabled = false;
+  }
+  if (!enabled) {
+    // Leave self.ClaudefsDebug undefined so the other modules skip their reporting calls.
+    window.claudefsDebug = function () {
+      return (
+        "claudeFS diagnostics are off. Run localStorage.setItem('claudefs.debug', 'on'), " +
+        'reload the page, reproduce the problem, then run claudefsDebug() again.'
+      );
+    };
+    return;
+  }
+
   const MAX_EVENTS = 200;
   const startedAt = new Date().toISOString();
 

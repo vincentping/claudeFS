@@ -1,6 +1,6 @@
 # claude.ai new experience: claudeFS tools never reach the model
 
-- Status: **working, verified 2026-11-05** on a new-experience account — experimental fix on branch `experiment/new-experience`
+- Status: **fixed in claudeFS 0.2.0** — verified on new- and classic-experience accounts (2026-11-05)
 - Affects: accounts moved to the claude.ai "new experience" (Chat and Cowork unified, internally "hub" / "New chat engine")
 - Recorded: 2026-11-05
 
@@ -39,39 +39,43 @@ buildDeclarations(state, {
 
 The result is cached per page load. In a normal browser tab the first check fails, so every local server is filtered out and the request goes out with no tools. Defining only a `claudeAppBindings` stub from DevTools is not enough: the user agent check still fails, and it runs too late anyway.
 
-This is a client-side gate. Whether the server also accepts `client_tools` from a browser (the HTTP `User-Agent` header is not changed by the shim) is still unknown.
+This is a client-side gate. The server accepts `client_tools` from a browser tab once the page passes it (the HTTP `User-Agent` header is not changed by the shim); confirmed in testing.
 
-## Experimental fix (branch `experiment/new-experience`)
+## Fix (claudeFS 0.2.0)
 
-claudeFS already impersonates the desktop shell's `mcp-server-connected` handshake. The branch extends that to the environment check:
+claudeFS already impersonates the desktop shell's `mcp-server-connected` handshake. 0.2.0 extends that to the environment check with `src/adapters/claude/desktop-shim.js` (MAIN world, `document_start`, before claude.ai's scripts):
 
-- `src/adapters/claude/desktop-shim.js` (MAIN world, `document_start`, before claude.ai's scripts):
-  - appends ` Claude/0.1.0` to `navigator.userAgent` (skipped if a Claude token is already there)
-  - installs a no-op `window.claudeAppBindings` with `registerBinding` / `unregisterBinding` (skipped if the real one exists)
-  - the version is deliberately below the desktop feature gates found in the code (`>=0.3.7`, `>=0.9.0`, `>=0.12.0`), so fewer desktop-only features switch on
-  - `localStorage.setItem('claudefs.desktopShim', 'off')` disables it; `claudefs.desktopShimVersion` overrides the version
-- `src/adapters/claude/debug.js`: `claudefsDebug()` in the console prints a report (shim state, detected experience, handshake, MCP call counts, PerformAction body sizes and whether claudeFS tool names appear in them). It records no chat or file content.
+- appends ` Claude/<version>` to `navigator.userAgent` (skipped if a Claude token is already there)
+- installs a no-op `window.claudeAppBindings` with `registerBinding` / `unregisterBinding` (skipped if the real one exists)
+- leaves sign-in pages alone (`/login`, `/logout`, `/magic-link`, `/sso-callback`, `/oauth`, `/onboarding`, `/verify`, `/invites`): with a desktop user agent the login page switches to the "Claude for Windows" desktop sign-in flow, which can't be completed in a tab. Since the desktop check is made once per page load, the shim reloads the page once when the address leaves those pages without a full reload, so it applies after signing in.
+- `localStorage.setItem('claudefs.desktopShim', 'off')` disables it; `claudefs.desktopShimVersion` overrides the version
 
-The reported version matters. claude.ai shows a hard "Upgrade your app" wall to a desktop user agent whose version falls in a range disabled by the remote config `nest_version_info` (GrowthBook key `3659052604`, checked by `Ns()` in the main bundle; it was not present in the 2026-11-04 bootstrap). It exists to retire old desktop builds, so it only blocks versions below a floor. Measured on 2026-11-05: `0.1.0`, `0.1.9` and `0.2.0` are blocked; `0.3.0` and everything above it that was tried (up to `1.0.0`) pass, so the disabled range is effectively `<0.3.0`.
+It runs on every claude.ai page, for both the new and the classic experience. Telling them apart is possible only after app_start has loaded, which is too late for the check, so it would need a remembered flag plus a reload; since the classic experience showed no meaningful side effects (below), it was kept simple.
 
-The shim defaults to `0.383.0`: a value well above that floor and the one the tools were verified with. It is not a real desktop app version (an earlier note claimed it came from app_start; it is actually the `lucide-react` version mentioned in a system prompt there). If the wall comes back after a claude.ai update, raise the default, or override at runtime with `localStorage.setItem('claudefs.desktopShimVersion', '…')`.
+### Reported version
 
-Known risks:
+claude.ai shows a hard "Upgrade your app" wall to a desktop user agent whose version falls in a range disabled by the remote config `nest_version_info` (GrowthBook key `3659052604`, checked by `Ns()` in the main bundle; it was not present in the 2026-11-04 bootstrap). It exists to retire old desktop builds, so it only blocks versions below a floor. Measured on 2026-11-05: `0.1.0`, `0.1.9` and `0.2.0` are blocked; `0.3.0` and everything above it that was tried (up to `1.0.0`) pass, so the disabled range is effectively `<0.3.0`.
 
-- The whole page now treats itself as the desktop app (`client_platform`, desktop-only UI such as device verification or "Trusted folders" may appear). Observed in testing: only a `cmdK` desktop binding was registered; no device-verification or Trusted-folders UI appeared.
-- The server accepts `client_tools` from this client (confirmed in testing — the tools were called and returned results).
-- The shim applies to old-experience accounts too, so it must not ship to `main` until it is tested on both.
+The shim reports `0.383.0`: a value well above that floor and the one the tools were verified with. It is not a real desktop app version (an earlier note claimed it came from app_start; it is actually the `lucide-react` version mentioned in a system prompt there). If the wall comes back after a claude.ai update, raise the default, or override at runtime with `localStorage.setItem('claudefs.desktopShimVersion', '…')`.
+
+### Diagnostics
+
+`src/adapters/claude/debug.js` is off by default. To collect a report: run `localStorage.setItem('claudefs.debug', 'on')` in the console on claude.ai, reload, reproduce the problem, then run `claudefsDebug()`. The report covers the shim state, detected experience, handshake, MCP call counts, and PerformAction body sizes with whether claudeFS tool names appear in them. It records no chat or file content and is never sent anywhere.
+
+### Side effects and limits
+
+- The page treats itself as the desktop app. Observed: a `cmdK` desktop binding is registered, and two small unlabeled web-only controls on the new-chat page no longer show. No device-verification, "Trusted folders" or upgrade screens appeared.
+- The Chat / Cowork switch and "Chats and tasks" exist on plain claude.ai too; they are not caused by the shim.
+- claudeFS works in **Chat** mode only. Cowork tasks run in Anthropic's cloud, where the browser's local folder isn't reachable, with or without the shim.
 - It depends on claude.ai internals and can break with any frontend update, including a future bump to the minimum version behind the upgrade wall.
 
-## Test result (2026-11-05)
+## Test results (2026-11-05)
 
-Loaded the branch on a new-experience account and sent "read the readme.md in the linked folder":
+**New experience** (reporter's account): the PerformAction request for the user's message was **23,544 bytes and carried all 21 claudeFS tool names** (before: 100–382 bytes with none). Claude made 7 claudeFS tool calls (`search_files`, `list_allowed_directories`, `list_directory`, `read_text_file`) and got results back. One `read_text_file` returned `ok:false` because Claude guessed a filename before searching; the folder had no readme.
 
-- PerformAction request for the user's message: **23,544 bytes, carrying all 21 claudeFS tool names** (before the fix, the reporter saw 100–382 byte bodies with none).
-- Claude made **7 claudeFS tool calls** (`search_files`, `list_allowed_directories`, `list_directory`, `read_text_file`) and got results back.
-- No errors; no upgrade wall (with version 0.383.0); no device-verification prompt.
+**Classic experience** (maintainer's account): in Chat mode `list_allowed_directories`, `list_directory` and `read_text_file` all worked. Compared with the shim switched off, the UI was the same apart from the small controls noted above.
 
-The one `read_text_file` that returned `ok:false` was Claude guessing the filename before searching; the connected folder happened to contain no readme, which is unrelated to the mechanism.
+**Reporter's retest** on both of their accounts: the tools worked on both. They found that the login page turned into the "Claude for Windows" screen while the extension was on, which led to the sign-in handling above. Verified afterwards: with the extension on, the login page shows the normal Google / Apple / email options, and after signing in the page reloads once by itself with the shim and claudeFS active.
 
 ## How it was investigated
 
@@ -112,3 +116,4 @@ Where things were in the 2026-11-05 build (`gated_imports_build_id` `9f9f2a4beb`
 | 2026-11-05 | Traced the hub bundle to the `omitServer` / desktop check described above. Pushed `experiment/new-experience` with the shim and diagnostics, and sent the reporter a test link. |
 | 2026-11-05 | Tested on a new-experience account. Hit the "Upgrade your app" wall at version 0.1.0; raised the shim version to 0.383.0 and it cleared. Tools then reached the model: 23.5 KB PerformAction with all 21 tools, 7 successful tool calls. Fix confirmed working. |
 | 2026-11-05 | Traced the wall to the remote config `nest_version_info` and measured the floor by trying versions: `<0.3.0` is blocked. Kept 0.383.0 as a fixed default rather than resolving the version dynamically. |
+| 2026-11-05 | Tested the classic experience (Chat mode works; no meaningful side effects). The reporter retested on both experiences and found the sign-in page problem; fixed by leaving sign-in pages alone and reloading once after sign-in. Released as 0.2.0. |
