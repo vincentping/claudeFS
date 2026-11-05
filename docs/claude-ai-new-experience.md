@@ -52,7 +52,9 @@ claudeFS already impersonates the desktop shell's `mcp-server-connected` handsha
   - `localStorage.setItem('claudefs.desktopShim', 'off')` disables it; `claudefs.desktopShimVersion` overrides the version
 - `src/adapters/claude/debug.js`: `claudefsDebug()` in the console prints a report (shim state, detected experience, handshake, MCP call counts, PerformAction body sizes and whether claudeFS tool names appear in them). It records no chat or file content.
 
-The reported version matters: the new experience shows a hard "Upgrade your app" wall when the version is below its minimum. `0.1.0` is rejected; `0.383.0` (the desktop app version seen in app_start on 2026-11-05) clears it. The shim defaults to `0.383.0`; override at runtime with `localStorage.setItem('claudefs.desktopShimVersion', '…')`.
+The reported version matters. claude.ai shows a hard "Upgrade your app" wall to a desktop user agent whose version falls in a range disabled by the remote config `nest_version_info` (GrowthBook key `3659052604`, checked by `Ns()` in the main bundle; it was not present in the 2026-11-04 bootstrap). It exists to retire old desktop builds, so it only blocks versions below a floor. Measured on 2026-11-05: `0.1.0`, `0.1.9` and `0.2.0` are blocked; `0.3.0` and everything above it that was tried (up to `1.0.0`) pass, so the disabled range is effectively `<0.3.0`.
+
+The shim defaults to `0.383.0`: a value well above that floor and the one the tools were verified with. It is not a real desktop app version (an earlier note claimed it came from app_start; it is actually the `lucide-react` version mentioned in a system prompt there). If the wall comes back after a claude.ai update, raise the default, or override at runtime with `localStorage.setItem('claudefs.desktopShimVersion', '…')`.
 
 Known risks:
 
@@ -109,3 +111,4 @@ Where things were in the 2026-11-05 build (`gated_imports_build_id` `9f9f2a4beb`
 | 2026-11-04 | The reporter sent app_start files from both accounts, which exposed `claude_ai_hub_web_delivery`. |
 | 2026-11-05 | Traced the hub bundle to the `omitServer` / desktop check described above. Pushed `experiment/new-experience` with the shim and diagnostics, and sent the reporter a test link. |
 | 2026-11-05 | Tested on a new-experience account. Hit the "Upgrade your app" wall at version 0.1.0; raised the shim version to 0.383.0 and it cleared. Tools then reached the model: 23.5 KB PerformAction with all 21 tools, 7 successful tool calls. Fix confirmed working. |
+| 2026-11-05 | Traced the wall to the remote config `nest_version_info` and measured the floor by trying versions: `<0.3.0` is blocked. Kept 0.383.0 as a fixed default rather than resolving the version dynamically. |

@@ -22,11 +22,14 @@
   const log = (...args) => console.log(TAG, ...args);
   const dbg = self.ClaudefsDebug; // debug.js loads before this file; undefined in builds without it
 
-  // The new experience shows a hard "Upgrade your app" wall when the reported version is
-  // below its minimum, so the version can't be set arbitrarily low. 0.383.0 is the desktop
-  // app version seen in the app_start bootstrap on 2026-11-05 and clears the wall; verified
-  // working (Claude called the claudeFS tools). If a future claude.ai update brings the wall
-  // back, raise this (or override at runtime with localStorage claudefs.desktopShimVersion).
+  // claude.ai shows a hard "Upgrade your app" wall to any desktop user agent whose version
+  // falls in a range disabled by the remote config "nest_version_info" (Ns() in the main
+  // bundle). It is meant to retire old desktop builds, so it only blocks versions below some
+  // floor. Measured on 2026-11-05: 0.2.0 and lower are blocked, 0.3.0 and higher pass.
+  // 0.383.0 is just a value well above that floor, and the version the tools were verified
+  // with end to end (it is not a real desktop app version). If the wall comes back after a
+  // claude.ai update, raise this, or override at runtime with
+  // localStorage.setItem('claudefs.desktopShimVersion', 'x.y.z').
   // xn() itself doesn't check the version; only the upgrade gate does.
   const DEFAULT_VERSION = '0.383.0';
 
