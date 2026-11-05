@@ -1,5 +1,5 @@
 // adapters/claude/desktop-shim.js — support for the claude.ai new experience
-// (Chat and Cowork unified / hub). MAIN world.
+// (Chat and Cowork merged into one view, no Chat/Cowork switch; internally "hub"). MAIN world.
 //
 // Background: when the new frontend builds PerformActionRequest.client_tools, it only
 // includes local MCP tools marked hostedBy:"desktop" if xn() is true (= it believes it is

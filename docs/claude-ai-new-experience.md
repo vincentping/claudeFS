@@ -1,7 +1,7 @@
 # claude.ai new experience: claudeFS tools never reach the model
 
 - Status: **fixed in claudeFS 0.2.0** — verified on new- and classic-experience accounts (2026-11-05)
-- Affects: accounts moved to the claude.ai "new experience" (Chat and Cowork unified, internally "hub" / "New chat engine")
+- Affects: accounts moved to the claude.ai "new experience". Anthropic calls it "Chat and Cowork unified" (internally "hub" / "New chat engine"). The classic experience has separate Chat and Cowork modes with a switch; the new one merges them into a single view without that switch, and sends messages through `PerformAction` instead of `/completion`.
 - Recorded: 2026-11-05
 
 ## Symptoms
