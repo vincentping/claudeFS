@@ -7,6 +7,8 @@
 
   async function handleMessage(msg, reply) {
     if (!msg || typeof msg !== 'object') return;
+    const dbg = self.ClaudefsDebug;
+    if (dbg && msg.method !== 'tools/call') dbg.mcp(msg.method);
 
     switch (msg.method) {
       case 'initialize':
@@ -46,7 +48,9 @@
               ? raw
               : { content: [{ type: 'text', text: String(raw) }] };
           reply({ jsonrpc: '2.0', id: msg.id, result });
+          if (dbg) dbg.mcp('tools/call', { name: params.name, ok: !result.isError });
         } catch (e) {
+          if (dbg) dbg.mcp('tools/call', { name: params.name, ok: false });
           reply({
             jsonrpc: '2.0',
             id: msg.id,
