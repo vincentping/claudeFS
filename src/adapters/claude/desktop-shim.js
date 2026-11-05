@@ -47,6 +47,25 @@
     return;
   }
 
+  // Sign-in pages: with a desktop user agent, claude.ai's login page switches to the
+  // "Claude for Windows" desktop sign-in flow, which can't be completed in a browser tab.
+  // So don't patch anything on these pages. claude.ai decides whether it's the desktop app
+  // once per page load, so after signing in, when the address leaves these pages without a
+  // full reload (client-side navigation), reload once so the shim applies on the app pages.
+  const AUTH_PATH = /^\/(login|logout|magic-link|sso-callback|oauth|onboarding|verify|invites)(\/|$)/;
+  if (AUTH_PATH.test(location.pathname)) {
+    log('sign-in page, not patching:', location.pathname);
+    if (dbg) dbg.shim({ skipped: 'sign-in page' });
+    const timer = setInterval(() => {
+      if (AUTH_PATH.test(location.pathname)) return;
+      clearInterval(timer);
+      log('left the sign-in pages, reloading so the shim applies');
+      if (dbg) dbg.shim({ reloadAfterSignIn: true });
+      location.reload();
+    }, 500);
+    return;
+  }
+
   const version = readSetting('claudefs.desktopShimVersion') || DEFAULT_VERSION;
 
   // 1. userAgent: append " Claude/<version>". The real desktop app already has this token,
