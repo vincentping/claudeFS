@@ -54,7 +54,7 @@ The new claude.ai experience (Chat and Cowork unified) only offers local tools t
 
 ### History
 
-- **2026-11 — Support for the new claude.ai experience.** On accounts moved to the new claude.ai experience, claudeFS connected but Claude never received its tools, because the new client only sends local tools from the desktop app. Version 0.2.0 runs claude.ai pages in desktop-client mode so the tools work again on both the classic and the new experience. Thanks to the user who reported it in detail, shared the bootstrap files and tested the fix. Investigation and details: [docs/claude-ai-new-experience.md](docs/claude-ai-new-experience.md).
+- **2026-11 — Support for the new claude.ai experience.** On accounts moved to the new claude.ai experience, claudeFS connected but Claude never received its tools, because the new client only sends local tools from the desktop app. Version 0.2.0 runs claude.ai pages in desktop-client mode so the tools work again on both the classic and the new experience. Thanks to Ahmet Soyköse from Türkiye for the detailed report, sharing the bootstrap files, and testing the fix. Investigation and details: [docs/claude-ai-new-experience.md](docs/claude-ai-new-experience.md).
 - **2026-10 – 2026-11 — WSL folders blocked, then restored.** A Chromium security fix ([issue 553114097](https://issues.chromium.org/issues/553114097)) made Chrome and Edge refuse every folder under `\\wsl.localhost\` ("contains system files"). claudeFS reported the regression as [issue 573422635](https://issues.chromium.org/issues/573422635). Chromium fixed it on 2026-10-29 and merged the fix to M156–M158, so project folders under the WSL home directory open again. Full timeline and details: [docs/chromium-wsl-folder-access.md](docs/chromium-wsl-folder-access.md).
 
 ### Disclaimer
@@ -109,7 +109,7 @@ MIT — see [LICENSE](./LICENSE).
 
 ### 更新历史
 
-- **2026-11 — 支持新版 claude.ai。**账户被切换到新版 claude.ai 后，claudeFS 能连接，但 Claude 一直拿不到它的工具，原因是新版客户端只在桌面 App 里才发送本地工具。0.2.0 版让 claude.ai 页面以桌面客户端模式运行，新旧两种界面下工具都恢复可用。感谢报告问题的用户提供详细的报告、引导数据并帮忙测试。排查经过与细节见 [docs/claude-ai-new-experience.md](docs/claude-ai-new-experience.md)。
+- **2026-11 — 支持新版 claude.ai。**账户被切换到新版 claude.ai 后，claudeFS 能连接，但 Claude 一直拿不到它的工具，原因是新版客户端只在桌面 App 里才发送本地工具。0.2.0 版让 claude.ai 页面以桌面客户端模式运行，新旧两种界面下工具都恢复可用。感谢来自土耳其（Türkiye）的 Ahmet Soyköse 提供详细的报告、分享引导数据并帮忙测试。排查经过与细节见 [docs/claude-ai-new-experience.md](docs/claude-ai-new-experience.md)。
 - **2026-10 – 2026-11 — WSL 目录被拦截，后恢复。**Chromium 的一个安全修复（[issue 553114097](https://issues.chromium.org/issues/553114097)）使 Chrome 与 Edge 拒绝打开 `\\wsl.localhost\` 下的任何文件夹（提示"包含系统文件"）。claudeFS 将这一回归报告为 [issue 573422635](https://issues.chromium.org/issues/573422635)，Chromium 于 2026-10-29 修复并合入 M156–M158，WSL home 目录下的项目文件夹恢复可用。完整经过与细节见 [docs/chromium-wsl-folder-access.md](docs/chromium-wsl-folder-access.md)。
 
 ### 免责声明
