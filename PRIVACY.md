@@ -1,6 +1,6 @@
 # Privacy Policy / 隐私政策
 
-_Last updated: 2026-07-27_
+_Last updated: 2026-11-05_
 
 ## English
 
@@ -14,7 +14,11 @@ _Last updated: 2026-07-27_
 - File content that Claude reads via the tools becomes part of your claude.ai conversation — exactly as if you had pasted or uploaded it there yourself. It is subject to Anthropic's own privacy policy, which this project does not control.
 - Every write operation (write / edit / move / delete, etc.) requires your explicit approval in a diff confirmation dialog before anything touches your disk.
 
-**Local storage:** the only thing the extension persists is a reference (handle) to the folder you selected, stored in your browser's local IndexedDB so you don't have to re-pick the folder every time. It never leaves your machine. Removing the extension or clearing site data deletes it.
+**Local storage:** the only thing the extension persists is a reference (handle) to the folder you selected, stored in your browser's local IndexedDB so you don't have to re-pick the folder every time. It never leaves your machine. Removing the extension or clearing site data deletes it. A few optional troubleshooting switches (`claudefs.debug`, `claudefs.desktopShim`, `claudefs.desktopShimVersion`) are read from claude.ai's local storage; the extension never sets them, they exist only if you set them yourself in the browser console.
+
+**Diagnostics:** off by default. If you turn them on (`claudefs.debug`), the extension keeps a small report in the open page — counts, sizes and tool names only, no conversation or file content — that you can print with `claudefsDebug()` and choose to share. It is never sent anywhere and is gone when the page closes.
+
+**Desktop-client mode:** so that the new claude.ai experience offers the local file tools to Claude, the extension makes claude.ai pages run in desktop-client mode: it adds a `Claude/x.y.z` token to the user agent string the page sees and provides a no-op desktop interface. This only affects what scripts inside claude.ai pages see; it does not change network requests and sends no data.
 
 **Permissions:** the extension requests a single host permission for `claude.ai` (required to run on that site) and no other Chrome permissions.
 
@@ -32,7 +36,11 @@ _Last updated: 2026-07-27_
 - Claude 通过工具读到的文件内容会进入你的 claude.ai 对话——等同于你手动粘贴或上传给它，适用 Anthropic 自己的隐私政策（不受本项目控制）。
 - 所有写操作（写入/编辑/移动/删除等）都必须经你在 diff 确认框中明确批准后才会落盘。
 
-**本地存储：** 扩展唯一持久化的数据是你所选文件夹的引用（handle），存在浏览器本地 IndexedDB 中，用途是免去每次重新选择文件夹。它不会离开你的电脑；卸载扩展或清除站点数据即删除。
+**本地存储：** 扩展唯一持久化的数据是你所选文件夹的引用（handle），存在浏览器本地 IndexedDB 中，用途是免去每次重新选择文件夹。它不会离开你的电脑；卸载扩展或清除站点数据即删除。另有几个可选的排查开关（`claudefs.debug`、`claudefs.desktopShim`、`claudefs.desktopShimVersion`）会从 claude.ai 的本地存储中读取；扩展自己从不设置它们，只有你在浏览器控制台里手动设置后才会存在。
+
+**诊断信息：** 默认关闭。如果你手动开启（`claudefs.debug`），扩展会在当前打开的页面里记录一份简短的报告——只有次数、大小和工具名，不包含对话或文件内容——你可以用 `claudefsDebug()` 打印出来，自行决定是否分享。它从不发送到任何地方，关闭页面即消失。
+
+**桌面客户端模式：** 为了让新版 claude.ai 把本地文件工具交给 Claude，扩展会让 claude.ai 页面以桌面客户端模式运行：在页面看到的 user agent 里加上 `Claude/x.y.z` 标记，并提供一个空的桌面端接口。这只影响 claude.ai 页面内脚本看到的内容，不改变网络请求，也不发送任何数据。
 
 **权限：** 扩展仅申请 `claude.ai` 一个站点权限（在该站点运行所必需），无其它任何 Chrome 权限。
 

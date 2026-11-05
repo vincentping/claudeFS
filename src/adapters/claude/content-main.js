@@ -15,6 +15,7 @@
   // 单向前进，不回退；连接面板 UI（ISOLATED world）据此决定是否展示连接按钮
   // ——只有真正的 claude.ai 对话页才会响应握手，非对话页/未登录都会走到 'failed'。
   function reportHandshakeStatus(status) {
+    if (self.ClaudefsDebug) self.ClaudefsDebug.handshake(0, status);
     self.ClaudefsCore.bridge.send('mcp-handshake-status', { status });
   }
 
@@ -64,6 +65,7 @@
         [port2]
       );
       log(`发送握手（第 ${attempt} 次尝试）`);
+      if (self.ClaudefsDebug) self.ClaudefsDebug.handshake(attempt);
     }
 
     tryOnce();

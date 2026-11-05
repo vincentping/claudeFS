@@ -3,10 +3,12 @@
 // 只负责协议翻译，具体工具执行全部经 core/dispatch.js（架构铁律：adapter 不碰 core 内部实现）。
 (function () {
   const SERVER_NAME = 'claudeFS';
-  const SERVER_VERSION = '0.1.0';
+  const SERVER_VERSION = '0.2.0';
 
   async function handleMessage(msg, reply) {
     if (!msg || typeof msg !== 'object') return;
+    const dbg = self.ClaudefsDebug;
+    if (dbg && msg.method !== 'tools/call') dbg.mcp(msg.method);
 
     switch (msg.method) {
       case 'initialize':
@@ -46,7 +48,9 @@
               ? raw
               : { content: [{ type: 'text', text: String(raw) }] };
           reply({ jsonrpc: '2.0', id: msg.id, result });
+          if (dbg) dbg.mcp('tools/call', { name: params.name, ok: !result.isError });
         } catch (e) {
+          if (dbg) dbg.mcp('tools/call', { name: params.name, ok: false });
           reply({
             jsonrpc: '2.0',
             id: msg.id,
