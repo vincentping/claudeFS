@@ -50,7 +50,7 @@ Every write operation (write / edit / move / delete, etc.) shows a diff confirma
 
 The text tools are text-only: read, search, and edit work on plain-text files (code, Markdown, JSON, CSV, etc.). Images and audio are handled separately by `read_media_file`, which hands them to Claude as native image/audio content. Office documents (docx / xlsx / pptx) and PDFs are not supported — use claude.ai's own file upload for those. Most per-file operations are capped at 5 MB.
 
-claude.ai is gradually moving accounts to a new experience. The classic one has separate Chat and Cowork modes with a switch between them; the new one merges them into a single view with no switch. The new experience only offers local tools to Claude when the page runs as the desktop app. So on claude.ai pages, claudeFS makes the page run in desktop-client mode: it adds a `Claude/x.y.z` token to the user agent string the page sees and provides a no-op desktop interface. This stays inside the page; it changes nothing on the network and sends nothing anywhere. Sign-in pages are left alone, and the page reloads once after you sign in. This relies on how claude.ai works today and may need an update if claude.ai changes. Details: [docs/claude-ai-new-experience.md](docs/claude-ai-new-experience.md).
+claude.ai is gradually moving accounts to a new experience, which only offers local tools to Claude when the page runs as the desktop app. So on claude.ai pages, claudeFS makes the page run in desktop-client mode: it adds a `Claude/x.y.z` token to the user agent string the page sees and provides a no-op desktop interface. This stays inside the page; it changes nothing on the network and sends nothing anywhere. Sign-in pages are left alone, and the page reloads once after you sign in. This relies on how claude.ai works today and may need an update if claude.ai changes. Details: [docs/claude-ai-new-experience.md](docs/claude-ai-new-experience.md).
 
 ### History
 
@@ -105,7 +105,7 @@ MIT — see [LICENSE](./LICENSE).
 
 文本工具仅限纯文本：读取、搜索、编辑只处理纯文本文件（代码、Markdown、JSON、CSV 等）。图片与音频由 `read_media_file` 单独支持，会作为原生的图片／音频内容交给 Claude。Office 文档（docx / xlsx / pptx）与 PDF 不支持——这类文件请走 claude.ai 自身的上传功能。多数单文件操作有 5MB 大小上限。
 
-claude.ai 正在逐步把账户切换到新版界面。旧版有 Chat 和 Cowork 两种模式，用切换按钮来选；新版把两者合并成了一个界面，没有切换按钮。新版只有在页面作为桌面 App 运行时，才会把本地工具交给 Claude。因此 claudeFS 会让 claude.ai 页面以桌面客户端模式运行：在页面看到的 user agent 里加上 `Claude/x.y.z` 标记，并提供一个空的桌面端接口。这只发生在页面内部，不改变任何网络请求，也不向任何地方发送数据。登录页不受影响，登录后页面会自动刷新一次。这依赖 claude.ai 目前的实现方式，claude.ai 改版后可能需要更新扩展。详见 [docs/claude-ai-new-experience.md](docs/claude-ai-new-experience.md)。
+claude.ai 正在逐步把账户切换到新版界面。新版只有在页面作为桌面 App 运行时，才会把本地工具交给 Claude。因此 claudeFS 会让 claude.ai 页面以桌面客户端模式运行：在页面看到的 user agent 里加上 `Claude/x.y.z` 标记，并提供一个空的桌面端接口。这只发生在页面内部，不改变任何网络请求，也不向任何地方发送数据。登录页不受影响，登录后页面会自动刷新一次。这依赖 claude.ai 目前的实现方式，claude.ai 改版后可能需要更新扩展。详见 [docs/claude-ai-new-experience.md](docs/claude-ai-new-experience.md)。
 
 ### 更新历史
 
