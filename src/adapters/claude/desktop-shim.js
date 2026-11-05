@@ -22,11 +22,13 @@
   const log = (...args) => console.log(TAG, ...args);
   const dbg = self.ClaudefsDebug; // debug.js loads before this file; undefined in builds without it
 
-  // The default version is deliberately low. The frontend gates desktop features at
-  // >=0.3.7 / >=0.9.0 / >=0.12.0; staying below them avoids switching on other desktop-only
-  // features that rely on the real preload API. xn() itself doesn't check the version, so
-  // any version the regex accepts will do.
-  const DEFAULT_VERSION = '0.1.0';
+  // The new experience shows a hard "Upgrade your app" wall when the reported version is
+  // below its minimum, so the version can't be set arbitrarily low. 0.383.0 is the desktop
+  // app version seen in the app_start bootstrap on 2026-11-05 and clears the wall; verified
+  // working (Claude called the claudeFS tools). If a future claude.ai update brings the wall
+  // back, raise this (or override at runtime with localStorage claudefs.desktopShimVersion).
+  // xn() itself doesn't check the version; only the upgrade gate does.
+  const DEFAULT_VERSION = '0.383.0';
 
   function readSetting(key) {
     try {
