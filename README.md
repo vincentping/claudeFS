@@ -38,6 +38,18 @@ Connect a local folder to [claude.ai](https://claude.ai) — the "FS" stands for
 
 > Use **Chat** mode. If your claude.ai shows a Chat / Cowork switch, the file tools work in Chat; Cowork tasks run in Anthropic's cloud and can't reach your local folder.
 
+### Troubleshooting
+
+**claudeFS shows as connected, but Claude says it can't find the file tools** (for example, it says `list_allowed_directories` isn't available, or that it runs in a cloud container and can't reach your computer).
+
+You are most likely in a **Cowork** task, not a Chat. Cowork runs in Anthropic's cloud, separate from your browser tab, so the tools claudeFS adds in the tab never reach it. Rephrasing the request won't help.
+
+1. Start a new conversation in **Chat** mode: pick Chat on the Chat / Cowork switch, or use "New chat" in the sidebar instead of a task entry.
+2. Check that claudeFS still shows as connected at the bottom right.
+3. Ask something like: "Use claudeFS's list_allowed_directories to show which folder is connected."
+
+Cowork's own "connect this computer" feature is unrelated to claudeFS; you don't need it.
+
 ### Privacy
 
 All file operations run locally in your browser; the extension itself sends nothing to any server. File content that Claude reads via the tools goes only into your claude.ai conversation — the same as if you had pasted or uploaded it there yourself. Your folder reference is stored only in the browser's local storage (IndexedDB). Full policy: [PRIVACY.md](./PRIVACY.md).
@@ -92,6 +104,18 @@ MIT — see [LICENSE](./LICENSE).
 > 提示：文件工具需要 Claude 先检索到，才会出现在它当次对话可用的工具列表里——如果它一开始没用工具，换个更明确提到文件操作的说法再试一次。
 
 > 请使用 **Chat** 模式。如果你的 claude.ai 有 Chat / Cowork 切换，文件工具只在 Chat 里可用；Cowork 任务运行在 Anthropic 的云端，访问不到你本地的文件夹。
+
+### 常见问题
+
+**claudeFS 显示已连接，但 Claude 说找不到文件工具**（例如说 `list_allowed_directories` 不在可用工具里，或者说自己运行在云端容器、连不到你的电脑）。
+
+这基本是因为你在 **Cowork** 任务里，而不是 Chat。Cowork 运行在 Anthropic 的云端，跟你的浏览器标签页是分开的，claudeFS 在标签页里提供的工具到不了那边，换什么说法都没用。
+
+1. 用 **Chat** 模式新开一个对话：在 Chat / Cowork 切换里选 Chat，或者用侧边栏的“新对话”，不要从任务入口进去。
+2. 确认右下角 claudeFS 仍显示已连接。
+3. 对 Claude 说类似：“用 claudeFS 的 list_allowed_directories 看看连接了哪个目录。”
+
+Cowork 自带的“链接到这台电脑”功能与 claudeFS 无关，用 claudeFS 不需要它。
 
 ### 隐私
 
